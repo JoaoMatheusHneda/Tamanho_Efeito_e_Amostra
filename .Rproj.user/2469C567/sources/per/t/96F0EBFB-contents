@@ -1,0 +1,282 @@
+---
+title: "Testes estatísticos, tamanho da amostra e tamanho de efeito"
+author: João Matheus Slujala Krüger Taborda Hneda - Mestrando em Bioestatística (UEM)
+date: "28/04/2022" 
+
+output:
+  rmdformats::readthedown:
+    highlight: default # "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn", "haddock", and "textmate".
+    use_bookdown: TRUE # Sessões Numeradas
+    toc_depth: 3 # Número de tópicos aparecem no sumário
+css: custom.css
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, eval = TRUE
+)
+```
+
+# Para 2 grupos
+
+## Escala Nominal
+
+### Teste estatístico: McNemar
+
+```{r eval=FALSE}
+mcnemar.test(x) #(com correção de continuidade)
+mcnemar.test(x,correct=F) #(sem correção de continuidade)
+```
+
+### Teste estatístico: Qui-Quadrado (homogeneidade)
+
+```{r eval=FALSE}
+chisq.test(x,correct=T) #(com correção de continuidade)
+chisq.test(x,correct=F) #(sem correção de continuidade)
+```
+
+### Teste estatístico: Teste exato de Fisher
+
+```{r eval=FALSE}
+fisher.test(x)
+```
+
+### Medida de efeito: Coeficiente $\phi$
+
+-   O coeficiente Phi $\phi$ é uma medida indicada para tabelas de contingência 2 × 2, sendo um caso específico da medida mais generalizada $V$ de Cramér.
+
+-   Pode ser associado aos testes:
+
+    -   Qui-Quadrado (quando os 2 grupos são não-pareados)
+    -   McNemar (quando os 2 grupos são pareados)
+
+```{r}
+data <- matrix(c(25,5,15,15),ncol=2,byrow=T)
+data
+library(psych)
+psych::phi(data,digits=4)
+```
+
+```{r}
+library(DescTools)
+DescTools::Phi(data)
+```
+
+### Medida de efeito: $W$ de Cohen
+
+-   Pode ser associado aos testes:
+    -   Qui-Quadrado (quando os 2 grupos são não-pareados)
+
+```{r}
+library(rcompanion)
+data <- matrix(c(25,5,15,15),ncol=2,byrow=T)
+data
+rcompanion::cohenW(data)
+```
+
+### Medida de efeito: $V$ de Cramér
+
+-   Pode ser associado aos testes:
+    -   Qui-Quadrado (quando os 2 grupos são não-pareados)
+
+```{r}
+data <- matrix(c(25,5,15,15),ncol=2,byrow=T)
+data
+library(rcompanion)
+rcompanion::cramerV(data)
+```
+
+### Medida de efeito: Razão de Chances
+
+```{r}
+library(DescTools)
+# Exemplo para calculo da OR:
+x11 <- 30
+x12 <- 20
+x21 <- 25
+x22 <- 40
+x <- matrix(0,2,2)
+x[1,1] <- x11
+x[1,2] <- x12
+x[2,1] <- x21
+x[2,2] <- x22
+DescTools::OddsRatio(x)
+```
+
+```{r}
+x11 <- 30
+x12 <- 20
+x21 <- 25
+x22 <- 40
+x <- matrix(0,2,2)
+x[1,1] <- x11
+x[1,2] <- x12
+x[2,1] <- x21
+x[2,2] <- x22
+DescTools::RelRisk(x)
+```
+
+### Medida de efeito: $Q$ de Yule
+
+```{r}
+library(DescTools)
+x11 <- 30
+x12 <- 20
+x21 <- 25
+x22 <- 40
+x <- matrix(0,2,2)
+x[1,1] <- x11
+x[1,2] <- x12
+x[2,1] <- x21
+x[2,2] <- x22
+DescTools::YuleQ(x)
+```
+
+## Escala Ordinal
+
+### Teste estatístico: Wilcoxon (teste específico para duas populações dependentes)
+
+```{r eval=FALSE}
+wilcox.test(x,y,paired=T, correct=T) #(com correção de continuidade)
+wilcox.test(x,y,paired=T,correct=F) #(sem correção de continuidade)
+```
+
+### Teste estatístico: Mann-Whitney (teste específico para duas populações independentes)
+
+```{r eval=FALSE}
+wilcox.test(x,y, correct=FALSE)
+```
+
+### Teste estatístico: Correlação $\tau$ de Kendall
+
+```{r eval=FALSE}
+cor.test(x,y,method="kendall")
+```
+
+### Medida de efeito: Delta $\delta$ de Clif
+
+
+
+```{r}
+library(effsize)
+grupo1 <- c(10,10,20,20,20,30,30,30,40,50)
+grupo2 <- c(10,20,30,40,40,50)
+resultado <- effsize::cliff.delta(grupo1,grupo2,return.dm=T)
+print(resultado)
+```
+
+```{r}
+print(resultado$dm)
+```
+
+### Medida de efeito: $A$ de Vargha-Delaney
+
+```{r}
+library(effsize)
+grupoa <- rnorm(100,mean=10)
+grupob <- rnorm(100,mean=12)
+d <- (c(grupoa,grupob))
+effsize::VD.A(grupoa,grupob)
+```
+
+### Medida de efeito: Coeficiente $r$
+
+```{r}
+x0 <- runif(5,min=10,max=20)
+diff0 <- runif(5,min=-12,max=30)
+y0 <- x0+diff0
+x <- x0
+y <- y0
+p <- wilcox.test(x0,y0,paired=T,exact=F,correct=F)$p.value
+z <- qnorm(1-(p/2))
+z1 <- z/sqrt(10)
+z1
+```
+
+### Medida de efeito: $\tau$ de Kendall
+
+```{r}
+x <- c(11,15,14,17,19,13,15,21,15,12,16,24)
+y <- c(3,15,8,13,21,7,0,14,11,4,8,15)
+kendall <- cor.test(x,y,method="kendall")
+kendall
+```
+
+## Escala Intervalar
+
+### Teste estatístico: Teste t pareado
+
+```{r eval=FALSE}
+t.test(x,y,paired=TRUE)
+```
+
+### Teste estatístico: Teste t não pareado
+
+#### 1° Caso - Variâncias populacionais iguais e desconhecidas:
+
+```{r eval=FALSE}
+t.test(x,y,var.equal=TRUE)
+```
+
+#### 2° Caso - Variâncias populacionais desiguais e desconhecidas:
+
+```{r eval=FALSE}
+t.test(x,y,var.equal=FALSE)
+```
+
+### Medida de efeito: $d$ de Cohen
+
+```{r}
+library(effsize)
+# Exemplo para d de cohen grupos independentes:
+grupoa=rnorm(100,mean=10)
+grupob=rnorm(100,mean=12)
+d=(c(grupoa,grupob))
+cohen.d(grupoa,grupob)
+```
+
+```{r}
+# Exemplo para d de cohen grupos pareados
+x0 <- rnorm(5,2,2.838)
+diff0 <- rnorm(5,1,2.838)
+y0 <- x0+diff0
+n <- 5
+nx <- length(x0)
+ny <- length(y0)
+t <- t.test(x0,y0,paired=T)$statistic
+cohen <- t/sqrt(n)
+cohen
+```
+
+### Medida de efeito: $g$ de Hedges
+
+```{r}
+library(effsize)
+grupoa <- rnorm(100,mean=10)
+grupob <- rnorm(100,mean=12)
+d <- (c(grupoa,grupob))
+f <- rep(c("grupoa","grupob"),each=100)
+cohen.d(d,f,hedges.correction=TRUE)
+```
+
+### Medida de efeito: Delta $\Delta$ de Glass
+
+```{r}
+tratamento <- rnorm(50,mean=35)
+controle <- rnorm(50,mean=25)
+desviotrat <- sqrt(var(tratamento))
+desviocont <- sqrt(var(controle))
+mediatrat <- mean(tratamento)
+mediacont <- mean(controle)
+delta <- ((mediatrat-mediacont)/desviocont)
+delta
+```
+
+### Medida de efeito: Psi
+
+# Para 3 grupos ou mais
+
+# Referências
+
+- Marcos Douglas Rodrigues de Sousa Principais medidas de magnitude do efeito utilizadas na comparação de dois grupos/ Marcos Douglas Rodrigues de Sousa. – Brasília, 2018-109 p. : il. (algumas color.) ; 30 cm.
+
