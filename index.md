@@ -27,11 +27,7 @@ output:
 #css: custom.css
 ---
 
-```{r, include=FALSE}
-knitr::opts_chunk$set(
-  echo = TRUE, eval = TRUE
-)
-```
+
 
 # Testes estatísticos
 
@@ -81,7 +77,8 @@ e a hipótese nula será rejeitada se valor- $p<\alpha$, sendo que $\alpha$ é o
 Nota: Se a frequência esperada, $(B+C) / 2$, for menor do que 5 , deve-se utilizar o teste Binomial ao invés do teste de McNemar.
 
 
-```{r eval=FALSE}
+
+```r
 mcnemar.test(x) #(com correção de continuidade)
 mcnemar.test(x,correct=F) #(sem correção de continuidade)
 ```
@@ -140,7 +137,8 @@ $$
 Sendo assim, se $\left(p_{1}=p_{2}\right)$, então $\theta=1$, caracterizando que os grupos são homogêneos. Quando $(1<\theta<+\infty)$, a odds de sucesso na Categoria 1 é maior na linha 1 do que na linha 2 , e portanto $p_{1}>p_{2}$. Da mesma forma a odds de sucesso na Categoria 1 será menor na linha 1 do que na linha 2 , quando $(0<\theta<1)$, e portanto $p_{1}<p_{2}$. Na interpretação da razão de chances, dois valores para $\theta$ representarão a mesma associação, porém em direções opostas, quando um valor é o inverso do outro.
 
 
-```{r eval=FALSE}
+
+```r
 chisq.test(x,correct=T) #(com correção de continuidade)
 chisq.test(x,correct=F) #(sem correção de continuidade)
 ```
@@ -195,7 +193,8 @@ $$
 Assim, considerando um nível de significância $\alpha$, a hipótese $H_{0}$ é rejeitada se valor- $p \leq$ $\alpha$.
 
 
-```{r eval=FALSE}
+
+```r
 fisher.test(x)
 ```
 
@@ -282,7 +281,8 @@ $$
 Considerando um nível de significância $\alpha$, a hipótese nula é rejeitada se valor- $p<\alpha$.
 
 
-```{r eval=FALSE}
+
+```r
 wilcox.test(x,y,paired=T, correct=T) #(com correção de continuidade)
 wilcox.test(x,y,paired=T,correct=F) #(sem correção de continuidade)
 ```
@@ -347,7 +347,8 @@ $$
 
 Considerando um nível de significância $\alpha$, a hipótese nula é rejeitada se valor-p $p<\alpha$.
 
-```{r eval=FALSE}
+
+```r
 wilcox.test(x,y, correct=FALSE)
 ```
 
@@ -434,7 +435,8 @@ $$
 Considerando um nível de significância $\alpha$, rejeita-se a hipótese nula $H_{0}$ se valor- $p<$ $\alpha$
 
 
-```{r eval=FALSE}
+
+```r
 cor.test(x,y,method="kendall")
 ```
 
@@ -472,7 +474,8 @@ tendo por base na distribuição $t$ de Student, com $(n-1)$ graus de liberdade.
 
 
 
-```{r eval=FALSE}
+
+```r
 t.test(x,y,paired=TRUE)
 ```
 
@@ -544,7 +547,8 @@ $$
 $$
 Considerando um nível de significância $\alpha$, a hipótese nula é rejeitada se valor- $p<\alpha$.
 
-```{r eval=FALSE}
+
+```r
 t.test(x,y,var.equal=TRUE)
 ```
 
@@ -579,7 +583,8 @@ $$
 Considerando um nível de significância $\alpha$, a hipótese nula é rejeitada se valor- $p<\alpha$.
 
 
-```{r eval=FALSE}
+
+```r
 t.test(x,y,var.equal=FALSE)
 ```
 
@@ -620,16 +625,49 @@ O coeficiente $\phi$ pode variar de 0 a 1 . Quanto maior é o valor de $\phi$, m
 
 
 
-```{r}
+
+```r
 data <- matrix(c(25,5,15,15),ncol=2,byrow=T)
 data
+```
+
+```
+##      [,1] [,2]
+## [1,]   25    5
+## [2,]   15   15
+```
+
+```r
 library(psych)
 psych::phi(data,digits=4)
 ```
 
-```{r}
+```
+## [1] 0.3536
+```
+
+
+```r
 library(DescTools)
+```
+
+```
+## 
+## Attaching package: 'DescTools'
+```
+
+```
+## The following objects are masked from 'package:psych':
+## 
+##     AUC, ICC, SD
+```
+
+```r
 DescTools::Phi(data)
+```
+
+```
+## [1] 0.3535534
 ```
 
 #### Medida de efeito: W de Cohen
@@ -654,11 +692,40 @@ A Tabela 7 a seguir traz os valores para os níveis de magnitude de efeito $(E S
 ![](imagens/tabela_7_contingencia.png)
 
 
-```{r}
+
+```r
 library(rcompanion)
+```
+
+```
+## 
+## Attaching package: 'rcompanion'
+```
+
+```
+## The following object is masked from 'package:psych':
+## 
+##     phi
+```
+
+```r
 data <- matrix(c(25,5,15,15),ncol=2,byrow=T)
 data
+```
+
+```
+##      [,1] [,2]
+## [1,]   25    5
+## [2,]   15   15
+```
+
+```r
 rcompanion::cohenW(data)
+```
+
+```
+## Cohen w 
+##  0.3536
 ```
 
 #### Medida de efeito: V de Cramér
@@ -684,11 +751,26 @@ A Tabela 8 traz os valores para os níveis de magnitude do efeito $(E S)$ sugeri
 ![](imagens/tabela_niveis_de_efeito_v_de_cramer.png)
 
 
-```{r}
+
+```r
 data <- matrix(c(25,5,15,15),ncol=2,byrow=T)
 data
+```
+
+```
+##      [,1] [,2]
+## [1,]   25    5
+## [2,]   15   15
+```
+
+```r
 library(rcompanion)
 rcompanion::cramerV(data)
+```
+
+```
+## Cramer V 
+##   0.3536
 ```
 
 
@@ -775,7 +857,8 @@ A Tabela 12 traz os valores sugeridos para os níveis de magnitude do efeito $(E
 
 ![](imagens/tabela_12_contingencia.png)
 
-```{r}
+
+```r
 library(DescTools)
 x11 <- 30
 x12 <- 20
@@ -787,6 +870,10 @@ x[1,2] <- x12
 x[2,1] <- x21
 x[2,2] <- x22
 DescTools::YuleQ(x)
+```
+
+```
+## [1] 0.4117647
 ```
 
 ### Escala Ordinal
@@ -848,17 +935,61 @@ A magnitude é avaliada utilizando os limiares fornecidos em [Romano, 2006], e a
 ![](imagens/tabela_13_contingencia.png)
 
 
-```{r}
+
+```r
 library(effsize)
+```
+
+```
+## Warning: package 'effsize' was built under R version 4.1.3
+```
+
+```
+## 
+## Attaching package: 'effsize'
+```
+
+```
+## The following object is masked from 'package:psych':
+## 
+##     cohen.d
+```
+
+```r
 grupo1 <- c(10,10,20,20,20,30,30,30,40,50)
 grupo2 <- c(10,20,30,40,40,50)
 resultado <- effsize::cliff.delta(grupo1,grupo2,return.dm=T)
 print(resultado)
 ```
 
+```
+## 
+## Cliff's Delta
+## 
+## delta estimate: -0.25 (small)
+## 95 percent confidence interval:
+##      lower      upper 
+## -0.7265846  0.3890062
+```
 
-```{r}
+
+
+```r
 print(resultado$dm)
+```
+
+```
+##    10 20 30 40 40 50
+## 10  0 -1 -1 -1 -1 -1
+## 10  0 -1 -1 -1 -1 -1
+## 20  1  0 -1 -1 -1 -1
+## 20  1  0 -1 -1 -1 -1
+## 20  1  0 -1 -1 -1 -1
+## 30  1  1  0 -1 -1 -1
+## 30  1  1  0 -1 -1 -1
+## 30  1  1  0 -1 -1 -1
+## 40  1  1  1  0  0 -1
+## 50  1  1  1  1  1  0
 ```
 
 #### Medida de efeito: $A$ de Vargha-Delaney
@@ -923,12 +1054,20 @@ Os níveis de magnitude do efeito $(E S)$ estão representados na Tabela 14 [Var
 ![](imagens/tabela_13_contingencia.png)
 
 
-```{r}
+
+```r
 library(effsize)
 grupoa <- rnorm(100,mean=10)
 grupob <- rnorm(100,mean=12)
 d <- (c(grupoa,grupob))
 effsize::VD.A(grupoa,grupob)
+```
+
+```
+## 
+## Vargha and Delaney A
+## 
+## A estimate: 0.1379 (large)
 ```
 
 #### Medida de efeito: Coeficiente $r$
@@ -953,7 +1092,8 @@ A Tabela 15 traz os valores para os níveis de magnitude do efeito $(E S)$ suger
 
 ![](imagens/tabela_14_contingencia.png)
 
-```{r}
+
+```r
 x0 <- runif(5,min=10,max=20)
 diff0 <- runif(5,min=-12,max=30)
 y0 <- x0+diff0
@@ -963,6 +1103,10 @@ p <- wilcox.test(x0,y0,paired=T,exact=F,correct=F)$p.value
 z <- qnorm(1-(p/2))
 z1 <- z/sqrt(10)
 z1
+```
+
+```
+## [1] 0.5543219
 ```
 
 #### Medida de efeito: $\tau$ de Kendall
@@ -987,11 +1131,32 @@ Os níveis de magnitude do efeito $(E S)$ estão representados na Tabela 16 [Esp
 ![](imagens/tabela_15_contingencia.png)
 
 
-```{r}
+
+```r
 x <- c(11,15,14,17,19,13,15,21,15,12,16,24)
 y <- c(3,15,8,13,21,7,0,14,11,4,8,15)
 kendall <- cor.test(x,y,method="kendall")
+```
+
+```
+## Warning in cor.test.default(x, y, method = "kendall"): Cannot compute exact p-
+## value with ties
+```
+
+```r
 kendall
+```
+
+```
+## 
+## 	Kendall's rank correlation tau
+## 
+## data:  x and y
+## z = 2.8491, p-value = 0.004385
+## alternative hypothesis: true tau is not equal to 0
+## sample estimates:
+##       tau 
+## 0.6456893
 ```
 
 
@@ -1081,7 +1246,8 @@ Cohen definiu os níveis de magnitude do efeito $(E S)$. Tais níveis estão esp
 ![](imagens/tabela_16_contingencia.png)
 
 
-```{r}
+
+```r
 library(effsize)
 # Exemplo para d de cohen grupos independentes:
 grupoa <- rnorm(100,mean=10)
@@ -1090,7 +1256,18 @@ d=(c(grupoa,grupob))
 effsize::cohen.d(grupoa,grupob)
 ```
 
-```{r}
+```
+## 
+## Cohen's d
+## 
+## d estimate: -1.939713 (large)
+## 95 percent confidence interval:
+##     lower     upper 
+## -2.277879 -1.601547
+```
+
+
+```r
 # Exemplo para d de cohen grupos pareados
 x0 <- rnorm(5,2,2.838)
 diff0 <- rnorm(5,1,2.838)
@@ -1101,6 +1278,11 @@ ny <- length(y0)
 t <- t.test(x0,y0,paired=T)$statistic
 cohen <- t/sqrt(n)
 cohen
+```
+
+```
+##          t 
+## -0.0541765
 ```
 
 #### Medida de efeito: g de Hedges
@@ -1135,13 +1317,24 @@ O resultado do valor obtido pela medida $g$ de Hedges  é interpretado de forma 
 
 ![](imagens/tabela_17_contingencia.png)
 
-```{r}
+
+```r
 library(effsize)
 grupoa <- rnorm(100,mean=10)
 grupob <- rnorm(100,mean=12)
 d <- (c(grupoa,grupob))
 f <- rep(c("grupoa","grupob"),each=100)
 cohen.d(d,f,hedges.correction=TRUE)
+```
+
+```
+## 
+## Hedges's g
+## 
+## g estimate: -2.14687 (large)
+## 95 percent confidence interval:
+##     lower     upper 
+## -2.495666 -1.798074
 ```
 
 #### Medida de efeito: Delta $\Delta$ de Glass
@@ -1166,7 +1359,8 @@ O resultado do valor obtido pela medida $\Delta$ de Glass é interpretado de for
 
 ![](imagens/tabela_18_contingencia.png)
 
-```{r}
+
+```r
 tratamento <- rnorm(50,mean=35)
 controle <- rnorm(50,mean=25)
 desviotrat <- sqrt(var(tratamento))
@@ -1175,6 +1369,10 @@ mediatrat <- mean(tratamento)
 mediacont <- mean(controle)
 delta <- ((mediatrat-mediacont)/desviocont)
 delta
+```
+
+```
+## [1] 9.382809
 ```
 
 #### Medida de efeito: Psi
