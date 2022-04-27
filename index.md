@@ -1,6 +1,6 @@
 ---
-title: "Testes estatísticos, tamanho da amostra e tamanho de efeito"
-author: João Matheus Slujala Krüger Taborda Hneda - Mestrando em Bioestatística (UEM)
+title: "Testes estatísticos, tamanho do efeito e poder do teste"
+#author: João Matheus Slujala Krüger Taborda Hneda - Mestrando em Bioestatística (UEM)
 date: "28/04/2022" 
 output:
     html_document:                    # Classe de documento.
@@ -29,59 +29,22 @@ output:
 
 
 
+
+# Sobre estatística inferencial
+
+Boa parte dos testes estatísticos usam o paradigma da testagem da hipótese nula de Neyman-Pearson. É a abordagem frequentista (também chamada de clássica ou assintótica).
+
+O contraponto a esta abordagem foi iniciado por Cohen (1990) ao afirmar que existe algo além da significância estatística. Sua proposta é utilizar a significância prática para quantificar a intensidade dos efeitos em vez de somente suas existências.
+
+Em oposição à abordagem assintótica está a abordagem bayesiana. Nesta, n não precisa tender para o infinito para que os testes sejam válidos. A inferência bayesiana, portanto, é adaptada ao tamanho da amostra, sem necessidade de se imaginar infinitas repetições do experimento como fazemos, por exemplo, com o bootstrapping.
+
 # Testes estatísticos
 
 ## Para 2 grupos
 
 ### Escala Nominal
 
-#### Teste estatístico: McNemar (Amostras pareadas)
 
-O teste de McNemar consiste em detectar mudanças em planejamentos do tipo "antes e depois", em que cada unidade amostral é seu próprio controle. O teste possui o pressuposto de que as amostras devem ser pareadas (relacionadas).
-
-Considerando duas amostras $X_{1}, \ldots, X_{n}$ e $Y_{1}, \ldots, Y_{n}$, do tipo "antes e depois", com valores pareados, pode-se construir uma tabela de contingência $2 \times 2$ para observar os desfechos.
-
-![](imagens/tabela_contingencia_teste_mcnemar.png)
-
-Note que $(B+C)$ representa o número total de indivíduos que acusaram alguma modificação.
-As hipóteses de interesse são:
-
-$$
-\left\{\begin{array}{l}
-H_{0}: p_{B}=p_{C} \\
-H_{a}: p_{B} \neq p_{C}
-\end{array}\right.
-$$
-
-Onde,
-
-$p_{B}$ indica a probabilidade de uma mudança do status "(+)" para o status "(-)";
-
-$p_{C}$ indica a probabilidade de uma mudança do status "(-)" para o status "(+)".
-
-Sob a hipótese nula, $(B+C) / 2$ representa a frequência esperada, tanto para a casela $B$ como para a casela $C$. Portanto, o teste de McNemar consiste em fazer um teste Qui-Quadrado de aderência com os valores de $B$ e $C$. Sendo assim, a estatística de teste é dada por
-$$
-Q_{M c N e m a r}^{2}=\frac{(B-C)^{2}}{B+C} \approx \chi_{(1)}^{2}
-$$
-Quando $(B+C)<25$, a aproximação pela distribuição Qui-Quadrado pode ficar comprometida. Para estes casos, recomenda-se utilizar a correção de continuidade de Yates. Sendo assim, a estatística do teste de McNemar fica da forma
-$$
-Q_{M c N e m a r-c o r r i g i d o}^{2}=\frac{(|B-C|-1)^{2}}{B+C} \approx \chi_{(1)}^{2}
-$$
-
-O nível descritivo do teste (valor-p) é dado por
-$$
-\text { valor- } p=P\left(\chi_{(1)}^{2}>Q_{M c N e m a r}^{2}\right),
-$$
-e a hipótese nula será rejeitada se valor- $p<\alpha$, sendo que $\alpha$ é o nível de significância do teste.
-
-Nota: Se a frequência esperada, $(B+C) / 2$, for menor do que 5 , deve-se utilizar o teste Binomial ao invés do teste de McNemar.
-
-
-
-```r
-mcnemar.test(x) #(com correção de continuidade)
-mcnemar.test(x,correct=F) #(sem correção de continuidade)
-```
 
 #### Teste estatístico: Qui-Quadrado (Amostras não pareadas)
 
@@ -117,7 +80,10 @@ em que a frequência esperada $E_{i j}$ é denotada da forma
 $$
 E_{i j}=\frac{(\text { total da coluna } \mathrm{j}) \times(\text { total da linha } \mathrm{i})}{\text { total geral }}=\frac{n_{i} C_{j}}{N}, i, j=1,2
 $$
-Em casos de tabelas de contingência no formato $2 \times 2$ com frequência esperada menor que $5\left(E_{i j}<5\right)$, a aproximação para a distribuição Qui-Quadrado é considerada ruim. Sendo assim para estes casos, pode-se utilizar a correção de continuidade de Yates, dada por
+Em casos de tabelas de contingência no formato $2 \times 2$ com frequência esperada menor que $5\left(E_{i j}<5\right)$, a aproximação para a distribuição Qui-Quadrado é considerada ruim. 
+
+Sendo assim para estes casos, pode-se utilizar a correção de continuidade de Yates, dada por
+
 $$
 Q_{\text {Yates }}^{2}=\sum_{i=1}^{2} \sum_{j=1}^{2} \frac{\left(\left|O_{i j}-E_{i j}\right|-0,5\right)^{2}}{E_{i j}} \approx \chi_{(1)}^{2}
 $$
@@ -143,9 +109,9 @@ chisq.test(x,correct=T) #(com correção de continuidade)
 chisq.test(x,correct=F) #(sem correção de continuidade)
 ```
 
-#### Teste estatístico: Teste exato de Fisher (Amostras não pareadas, amostras de tamanho pequeno e valor esperado $E_{ij} < 5$)
+#### Teste estatístico: Teste exato de Fisher (Amostras não pareadas, amostras de tamanho pequeno)
 
-O Teste exato de Fisher é utilizado em situações em que existem tabelas de contingência no formato $2 \times 2$, com amostras de tamanho pequeno e valor esperado $E_{i j}<5$. Portanto, o teste consiste em determinar a probabilidade exata de ocorrência de uma frequência observada, ou de valores mais extremos.
+O Teste exato de Fisher é utilizado em situações em que existem tabelas de contingência no formato $2 \times 2$, com amostras de tamanho pequeno ( $n \leq 20$) ou algum valor esperado $e_1 \leq 1$ a literatura apresenta o teste exato de Fisher. O teste consiste em determinar a probabilidade exata de ocorrência de uma frequência observada ou de valores mais extremos. Em outras palavras, esse teste fornece valor-p exato e não exige técnica de aproximação.
 
 Na tabela $2 \times 2$, cada observação é classificada em uma determinada célula. Para a realização do teste, supõe-se que as amostras devem ser aleatórias e independentes [Conover, 1999].
 
@@ -198,7 +164,143 @@ Assim, considerando um nível de significância $\alpha$, a hipótese $H_{0}$ é
 fisher.test(x)
 ```
 
+
+#### Teste estatístico: McNemar (Amostras pareadas)
+
+O teste de McNemar consiste em detectar mudanças em planejamentos do tipo "antes e depois", em que cada unidade amostral é seu próprio controle. O teste possui o pressuposto de que as amostras devem ser pareadas (relacionadas).
+
+Considerando duas amostras $X_{1}, \ldots, X_{n}$ e $Y_{1}, \ldots, Y_{n}$, do tipo "antes e depois", com valores pareados, pode-se construir uma tabela de contingência $2 \times 2$ para observar os desfechos.
+
+![](imagens/tabela_contingencia_teste_mcnemar.png)
+
+Note que $(B+C)$ representa o número total de indivíduos que acusaram alguma modificação.
+As hipóteses de interesse são:
+
+$$
+\left\{\begin{array}{l}
+H_{0}: p_{B}=p_{C} \\
+H_{a}: p_{B} \neq p_{C}
+\end{array}\right.
+$$
+
+Onde,
+
+$p_{B}$ indica a probabilidade de uma mudança do status "(+)" para o status "(-)";
+
+$p_{C}$ indica a probabilidade de uma mudança do status "(-)" para o status "(+)".
+
+Sob a hipótese nula, $(B+C) / 2$ representa a frequência esperada, tanto para a casela $B$ como para a casela $C$. Portanto, o teste de McNemar consiste em fazer um teste Qui-Quadrado de aderência com os valores de $B$ e $C$. Sendo assim, a estatística de teste é dada por
+$$
+Q_{M c N e m a r}^{2}=\frac{(B-C)^{2}}{B+C} \approx \chi_{(1)}^{2}
+$$
+Quando $(B+C)<25$, a aproximação pela distribuição Qui-Quadrado pode ficar comprometida. Para estes casos, recomenda-se utilizar a correção de continuidade de Yates. Sendo assim, a estatística do teste de McNemar fica da forma
+$$
+Q_{M c N e m a r-c o r r i g i d o}^{2}=\frac{(|B-C|-1)^{2}}{B+C} \approx \chi_{(1)}^{2}
+$$
+
+O nível descritivo do teste (valor-p) é dado por
+$$
+\text { valor- } p=P\left(\chi_{(1)}^{2}>Q_{M c N e m a r}^{2}\right),
+$$
+e a hipótese nula será rejeitada se valor- $p<\alpha$, sendo que $\alpha$ é o nível de significância do teste.
+
+Nota: Se a frequência esperada, $(B+C) / 2$, for menor do que 5 , deve-se utilizar o teste Binomial ao invés do teste de McNemar.
+
+
+
+```r
+mcnemar.test(x) #(com correção de continuidade)
+mcnemar.test(x,correct=F) #(sem correção de continuidade)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Escala Ordinal
+
+
+#### Teste estatístico: Mann-Whitney (teste específico para duas populações independentes)
+
+O teste de Mann - Whitney se baseia na comparação de dois grupos $(X$ e $Y)$ independentes, com a suposição de que os dados devem possuir no mínimo escala ordinal. De forma geral, o objetivo do teste é verificar se duas amostras independentes são provenientes de uma mesma população. Para a utilização do teste, observa-se uma amostra aleatória $\left(x_{1}, \ldots, x_{n}\right)$, procedente de uma população e outra amostra aleatória $\left(y_{1}, \ldots, y_{m}\right)$, procedente de uma outra população [Conover, 1999].
+
+Com as observações dos dois grupos, verifica-se os postos dos valores sem discriminar os grupos, ou seja, ordena-se as observações e atribui-se os postos para ambos os grupos. Se a distribuição dos postos são bem próximas em ambas as amostras, existe a possibilidade de que as amostras são provenientes de uma mesma população.
+
+Para verificar se ambas as amostras são procedentes da mesma população, as hipóteses de interesse serão:
+
+$\left\{\begin{array}{l}H_{0}: \text { Os grupos } X \text { e } Y \text { são iguais } \\ H_{a}: \text { Os grupos } X \text { e } Y \text { são diferentes }\end{array}\right.$
+
+Para a população $Y$, a estatística $U$ será dada da forma
+
+$$
+U_{y}=R_{y}-\frac{m(m+1)}{2},
+$$
+
+onde
+
+$R_{y}$ representa a soma dos postos do grupo $Y$,
+
+$m$ representa o número de observações no grupo $Y$.
+
+Para o grupo $X$ deve ser feito o mesmo cálculo sendo representado por $U_{x}$. Quando houver poucos empates ou nenhum empate, a estatística de teste será o mínimo entre $U_{x}$ e $U_{y}$, sendo denotada da forma
+
+$$
+U_{a b s}=\min \left(U_{x}, U_{y}\right) .
+$$
+
+Portanto, ao se obter o valor crítico $d$ na tabela do teste de Mann-Whitney (Tabela 5), rejeita-se $H_{0}$ a um nível de significância específico se $U_{\text {obs }}<d$.
+
+Para o caso de grandes amostras, utiliza-se uma aproximação para a distribuição normal padrão e portanto a estatística de teste sem correção de continuidade é dada por
+
+$$
+U=\frac{\left|U_{x}-\frac{n m}{2}\right|}{\sqrt{\frac{n m}{(n+m)(n+m-1)}\left(\frac{(n+m)^{3}-n-m}{12}-\sum_{i=1}^{l} \frac{t^{3}-t_{i}}{12}\right)}} \approx N(0,1),
+$$
+
+e a estatística com correção de continuidade é dada por
+
+$$
+U=\frac{\left|U_{x}-\frac{n m}{2}\right|-0.5}{\sqrt{\frac{n m}{(n+m)(n+m-1)}\left(\frac{(n+m)^{3}-n-m}{12}-\sum_{i=1}^{l} \frac{t^{3}-t_{i}}{12}\right)}} \approx N(0,1)
+$$
+
+em que
+
+$n$ : número de observações na amostra aleatória referente à população $\mathrm{X}$.
+
+$m$ : número de observações na amostra aleatória referente à população Y.
+
+$l$ é o número de empates dos postos.
+
+$t_{j}$ : é o número de elementos no $j$-ésimo empate (do posto).
+
+O nível descritivo do teste (valor- $p$ ) é dado por
+
+$$
+\text { valor- } p=2 \times P(Z>|U|)
+$$
+
+Considerando um nível de significância $\alpha$, a hipótese nula é rejeitada se valor-p $p<\alpha$.
+
+
+```r
+wilcox.test(x,y, correct=FALSE)
+```
 
 #### Teste estatístico: Wilcoxon (teste específico para duas populações dependentes)
 
@@ -287,70 +389,6 @@ wilcox.test(x,y,paired=T, correct=T) #(com correção de continuidade)
 wilcox.test(x,y,paired=T,correct=F) #(sem correção de continuidade)
 ```
 
-#### Teste estatístico: Mann-Whitney (teste específico para duas populações independentes)
-
-O teste de Mann - Whitney se baseia na comparação de dois grupos $(X$ e $Y)$ independentes, com a suposição de que os dados devem possuir no mínimo escala ordinal. De forma geral, o objetivo do teste é verificar se duas amostras independentes são provenientes de uma mesma população. Para a utilização do teste, observa-se uma amostra aleatória $\left(x_{1}, \ldots, x_{n}\right)$, procedente de uma população e outra amostra aleatória $\left(y_{1}, \ldots, y_{m}\right)$, procedente de uma outra população [Conover, 1999].
-
-Com as observações dos dois grupos, verifica-se os postos dos valores sem discriminar os grupos, ou seja, ordena-se as observações e atribui-se os postos para ambos os grupos. Se a distribuição dos postos são bem próximas em ambas as amostras, existe a possibilidade de que as amostras são provenientes de uma mesma população.
-
-Para verificar se ambas as amostras são procedentes da mesma população, as hipóteses de interesse serão:
-
-$\left\{\begin{array}{l}H_{0}: \text { Os grupos } X \text { e } Y \text { são iguais } \\ H_{a}: \text { Os grupos } X \text { e } Y \text { são diferentes }\end{array}\right.$
-
-Para a população $Y$, a estatística $U$ será dada da forma
-
-$$
-U_{y}=R_{y}-\frac{m(m+1)}{2},
-$$
-
-onde
-
-$R_{y}$ representa a soma dos postos do grupo $Y$,
-
-$m$ representa o número de observações no grupo $Y$.
-
-Para o grupo $X$ deve ser feito o mesmo cálculo sendo representado por $U_{x}$. Quando houver poucos empates ou nenhum empate, a estatística de teste será o mínimo entre $U_{x}$ e $U_{y}$, sendo denotada da forma
-
-$$
-U_{a b s}=\min \left(U_{x}, U_{y}\right) .
-$$
-
-Portanto, ao se obter o valor crítico $d$ na tabela do teste de Mann-Whitney (Tabela 5), rejeita-se $H_{0}$ a um nível de significância específico se $U_{\text {obs }}<d$.
-
-Para o caso de grandes amostras, utiliza-se uma aproximação para a distribuição normal padrão e portanto a estatística de teste sem correção de continuidade é dada por
-
-$$
-U=\frac{\left|U_{x}-\frac{n m}{2}\right|}{\sqrt{\frac{n m}{(n+m)(n+m-1)}\left(\frac{(n+m)^{3}-n-m}{12}-\sum_{i=1}^{l} \frac{t^{3}-t_{i}}{12}\right)}} \approx N(0,1),
-$$
-
-e a estatística com correção de continuidade é dada por
-
-$$
-U=\frac{\left|U_{x}-\frac{n m}{2}\right|-0.5}{\sqrt{\frac{n m}{(n+m)(n+m-1)}\left(\frac{(n+m)^{3}-n-m}{12}-\sum_{i=1}^{l} \frac{t^{3}-t_{i}}{12}\right)}} \approx N(0,1)
-$$
-
-em que
-
-$n$ : número de observações na amostra aleatória referente à população $\mathrm{X}$.
-
-$m$ : número de observações na amostra aleatória referente à população Y.
-
-$l$ é o número de empates dos postos.
-
-$t_{j}$ : é o número de elementos no $j$-ésimo empate (do posto).
-
-O nível descritivo do teste (valor- $p$ ) é dado por
-
-$$
-\text { valor- } p=2 \times P(Z>|U|)
-$$
-
-Considerando um nível de significância $\alpha$, a hipótese nula é rejeitada se valor-p $p<\alpha$.
-
-
-```r
-wilcox.test(x,y, correct=FALSE)
-```
 
 #### Teste estatístico: Correlação $\tau$ de Kendall
 
@@ -442,42 +480,7 @@ cor.test(x,y,method="kendall")
 
 ### Escala Intervalar
 
-#### Teste estatístico: Teste t pareado
 
-O teste $t$ pareado consiste em verificar se as médias de duas populaçōes (População 1 e 2) dependentes são iguais.
-
-Suponha que existam duas amostras $X_{1}, \ldots, X_{n}$ e $Y_{1}, \ldots, Y_{n}$ em que as observaçōes são dependentes (pareadas). Ao definir a variável aleátoria $D=X-Y$, obtém-se uma amostra $D_{1}, \ldots, D_{n}$ que é o resultado das diferenças entre os valores de cada par [Bussab \& Morettin, 2013]. Considerando que a variável aleatória $D$ tem distribuição normal $N\left(\mu_{D}, \sigma_{D}^{2}\right), \sigma_{D}^{2}$ desconhecido, pode-se inferir que :
-$$
-\bar{D}=\frac{1}{n} \sum_{i=1}^{n}\left(X_{i}-Y_{i}\right)=\bar{X}-\bar{Y} \sim N\left(\mu_{D}, \frac{\sigma_{D}^{2}}{n}\right)
-$$
-Como $\mu_{D}=E(D)=E(X-Y)=E(X)-E(Y)=\mu_{1}-\mu_{2}$, qualquer informação sobre $\mu_{1}-\mu_{2}$ corresponde a $\mu_{D}$. Portanto, para testar se as médias dos grupos são iguais, as hipóteses de interesse serão:
-$$
-\left\{\begin{array}{l}
-H_{0}: \mu_{D}=0 \\
-H_{a}: \mu_{D} \neq 0
-\end{array}\right.
-$$
-Considerando que
-$$
-S_{D}^{2}=\frac{1}{n-1} \sum_{i=1}^{n}\left(D_{i}-\bar{D}\right)^{2}
-$$
-a estatística de teste é dada por
-$$
-T_{o b s}=\frac{\sqrt{n}\left(\bar{D}-\mu_{D}\right)}{S_{D}}
-$$
-e terá distribuição $t$ de Student, com $(n-1)$ graus de liberdade.
-Para o critério de decisão, pode-se utilizar o valor-p, neste caso de teste bilateral, o valor- $p$ é calculado da forma
-$$
-\text { valor- } p=2 \times P\left(t_{(n-1)}>\left|T_{o b s}\right|\right) \text {, }
-$$
-tendo por base na distribuição $t$ de Student, com $(n-1)$ graus de liberdade. Considerando um nível de significância $\alpha$, rejeita-se $H_{0}$, se valor- $p<\alpha$.
-
-
-
-
-```r
-t.test(x,y,paired=TRUE)
-```
 
 #### Teste estatístico: Teste t não pareado
 
@@ -588,7 +591,46 @@ Considerando um nível de significância $\alpha$, a hipótese nula é rejeitada
 t.test(x,y,var.equal=FALSE)
 ```
 
-## Para 3 grupos ou mais
+
+#### Teste estatístico: Teste t pareado
+
+O teste $t$ pareado consiste em verificar se as médias de duas populaçōes (População 1 e 2) dependentes são iguais.
+
+Suponha que existam duas amostras $X_{1}, \ldots, X_{n}$ e $Y_{1}, \ldots, Y_{n}$ em que as observaçōes são dependentes (pareadas). Ao definir a variável aleátoria $D=X-Y$, obtém-se uma amostra $D_{1}, \ldots, D_{n}$ que é o resultado das diferenças entre os valores de cada par [Bussab \& Morettin, 2013]. Considerando que a variável aleatória $D$ tem distribuição normal $N\left(\mu_{D}, \sigma_{D}^{2}\right), \sigma_{D}^{2}$ desconhecido, pode-se inferir que :
+$$
+\bar{D}=\frac{1}{n} \sum_{i=1}^{n}\left(X_{i}-Y_{i}\right)=\bar{X}-\bar{Y} \sim N\left(\mu_{D}, \frac{\sigma_{D}^{2}}{n}\right)
+$$
+Como $\mu_{D}=E(D)=E(X-Y)=E(X)-E(Y)=\mu_{1}-\mu_{2}$, qualquer informação sobre $\mu_{1}-\mu_{2}$ corresponde a $\mu_{D}$. Portanto, para testar se as médias dos grupos são iguais, as hipóteses de interesse serão:
+$$
+\left\{\begin{array}{l}
+H_{0}: \mu_{D}=0 \\
+H_{a}: \mu_{D} \neq 0
+\end{array}\right.
+$$
+Considerando que
+$$
+S_{D}^{2}=\frac{1}{n-1} \sum_{i=1}^{n}\left(D_{i}-\bar{D}\right)^{2}
+$$
+a estatística de teste é dada por
+$$
+T_{o b s}=\frac{\sqrt{n}\left(\bar{D}-\mu_{D}\right)}{S_{D}}
+$$
+e terá distribuição $t$ de Student, com $(n-1)$ graus de liberdade.
+Para o critério de decisão, pode-se utilizar o valor-p, neste caso de teste bilateral, o valor- $p$ é calculado da forma
+$$
+\text { valor- } p=2 \times P\left(t_{(n-1)}>\left|T_{o b s}\right|\right) \text {, }
+$$
+tendo por base na distribuição $t$ de Student, com $(n-1)$ graus de liberdade. Considerando um nível de significância $\alpha$, rejeita-se $H_{0}$, se valor- $p<\alpha$.
+
+
+
+
+```r
+t.test(x,y,paired=TRUE)
+```
+
+
+<!-- ## Para 3 grupos ou mais -->
 
 # Medidas de Efeito
 
@@ -622,8 +664,7 @@ O coeficiente $\phi$ pode variar de 0 a 1 . Quanto maior é o valor de $\phi$, m
 
 ![](imagens/tabela_6_contingencia.png)
 
-
-
+##### Associação ao teste Qui-Quadrado (Amostras não pareadas)
 
 
 ```r
@@ -637,38 +678,174 @@ data
 ## [2,]   15   15
 ```
 
-```r
-library(psych)
-psych::phi(data,digits=4)
-```
-
-```
-## [1] 0.3536
-```
+- Verifica as frequências esperadas
 
 
 ```r
-library(DescTools)
+e1 <- apply(data, 2, sum)/nrow(data)
+e2 <- apply(data, 2, sum)/nrow(data)
+rbind(e1,e2) # Como as frequências esperadas não são menores $(E_{i j}<5)$, a correção de continuidade de Yates não foi utilizada.
+```
+
+```
+##    [,1] [,2]
+## e1   20   10
+## e2   20   10
+```
+
+```r
+chisq.test(data,correct=F)$expected # avalia freq esperadas diretamente pelo teste
+```
+
+```
+##      [,1] [,2]
+## [1,]   20   10
+## [2,]   20   10
+```
+
+- Teste Qui-Quadrado
+
+
+```r
+chisq.test(data,correct=F) #(sem correção de continuidade)
 ```
 
 ```
 ## 
-## Attaching package: 'DescTools'
+## 	Pearson's Chi-squared test
+## 
+## data:  data
+## X-squared = 7.5, df = 1, p-value = 0.00617
 ```
 
-```
-## The following objects are masked from 'package:psych':
-## 
-##     AUC, ICC, SD
-```
+- Cálculo do coeficiente phi
+
 
 ```r
-DescTools::Phi(data)
+as.numeric(sqrt(chisq.test(data,correct=F)$statistic/sum(data))) #(sem correção de continuidade de Yates)
 ```
 
 ```
 ## [1] 0.3535534
 ```
+
+```r
+library(psych)
+psych::phi(data,digits=7)
+```
+
+```
+## [1] 0.3535534
+```
+
+```r
+# ou
+library(DescTools)
+DescTools::CramerV(data)
+```
+
+```
+## [1] 0.3535534
+```
+
+##### Associação ao teste McNemar (Amostras pareadas)
+
+
+```r
+Performance <- matrix(c(794, 86, 150, 570),
+                      nrow = 2,
+                      dimnames = list("1st Survey" = c("Approve", "Disapprove"),
+                                      "2nd Survey" = c("Approve", "Disapprove")))
+Performance
+```
+
+```
+##             2nd Survey
+## 1st Survey   Approve Disapprove
+##   Approve        794        150
+##   Disapprove      86        570
+```
+
+- Verifica necessidade de utilizar o teste binomial
+
+
+```r
+(Performance[1,2]+Performance[2,1])/2 # < 5 # Não precisa utilizar o teste binomial
+```
+
+```
+## [1] 118
+```
+
+- Verifica necessidade de utilizar a correção de continuidade de Yates
+
+
+```r
+(Performance[1,2]+Performance[2,1]) # < 25 # Não precisa utilizar a correção de continuidade de Yates
+```
+
+```
+## [1] 236
+```
+
+- Teste McNemar
+
+
+```r
+mcnemar.test(Performance, correct = FALSE)
+```
+
+```
+## 
+## 	McNemar's Chi-squared test
+## 
+## data:  Performance
+## McNemar's chi-squared = 17.356, df = 1, p-value = 3.099e-05
+```
+
+
+
+- Cálculo do coeficiente phi
+
+
+```r
+# sem correção de continuidade de Yates
+mcnemar.test(Performance, correct = FALSE)
+```
+
+```
+## 
+## 	McNemar's Chi-squared test
+## 
+## data:  Performance
+## McNemar's chi-squared = 17.356, df = 1, p-value = 3.099e-05
+```
+
+```r
+phi <- as.numeric(sqrt(mcnemar.test(Performance, correct = FALSE)$statistic/sum(Performance)))
+phi
+```
+
+```
+## [1] 0.1041511
+```
+
+
+
+
+<!-- Teste Mcnemar -->
+
+
+
+
+
+
+
+
+
+
+
+
 
 #### Medida de efeito: W de Cohen
 
@@ -749,7 +926,6 @@ $Q^{2}$ é a estatística do teste Qui-Quadrado.
 A Tabela 8 traz os valores para os níveis de magnitude do efeito $(E S)$ sugeridos por [Cohen, 1988].
 
 ![](imagens/tabela_niveis_de_efeito_v_de_cramer.png)
-
 
 
 ```r
@@ -1067,7 +1243,7 @@ effsize::VD.A(grupoa,grupob)
 ## 
 ## Vargha and Delaney A
 ## 
-## A estimate: 0.1379 (large)
+## A estimate: 0.0775 (large)
 ```
 
 #### Medida de efeito: Coeficiente $r$
@@ -1106,7 +1282,7 @@ z1
 ```
 
 ```
-## [1] 0.5543219
+## [1] 0.04264014
 ```
 
 #### Medida de efeito: $\tau$ de Kendall
@@ -1260,10 +1436,10 @@ effsize::cohen.d(grupoa,grupob)
 ## 
 ## Cohen's d
 ## 
-## d estimate: -1.939713 (large)
+## d estimate: -1.842273 (large)
 ## 95 percent confidence interval:
 ##     lower     upper 
-## -2.277879 -1.601547
+## -2.175100 -1.509447
 ```
 
 
@@ -1271,6 +1447,10 @@ effsize::cohen.d(grupoa,grupob)
 # Exemplo para d de cohen grupos pareados
 x0 <- rnorm(5,2,2.838)
 diff0 <- rnorm(5,1,2.838)
+```
+
+
+```r
 y0 <- x0+diff0
 n <- 5
 nx <- length(x0)
@@ -1282,8 +1462,35 @@ cohen
 
 ```
 ##          t 
-## -0.0541765
+## -0.3799685
 ```
+
+
+
+```r
+effsize::cohen.d(x0,y0,paired = TRUE)
+```
+
+```
+## 
+## Cohen's d
+## 
+## d estimate: -0.1122974 (negligible)
+## 95 percent confidence interval:
+##      lower      upper 
+## -0.4180444  0.1934495
+```
+
+
+```r
+cor(x0,y0)
+```
+
+```
+## [1] 0.9563269
+```
+
+
 
 #### Medida de efeito: g de Hedges
 
@@ -1331,10 +1538,10 @@ cohen.d(d,f,hedges.correction=TRUE)
 ## 
 ## Hedges's g
 ## 
-## g estimate: -2.14687 (large)
+## g estimate: -2.200603 (large)
 ## 95 percent confidence interval:
 ##     lower     upper 
-## -2.495666 -1.798074
+## -2.552615 -1.848590
 ```
 
 #### Medida de efeito: Delta $\Delta$ de Glass
@@ -1372,14 +1579,277 @@ delta
 ```
 
 ```
-## [1] 9.382809
+## [1] 10.5207
 ```
 
-#### Medida de efeito: Psi
+<!-- #### Medida de efeito: Psi -->
 
 ## Para 3 grupos ou mais
+
+### Pearson ($r^2$)
+
+$$
+r=\frac{\sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)\left(Y_{i}-\bar{Y}\right)}{\sqrt{\sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)^{2}} \sqrt{\sum_{i=1}^{n}\left(Y_{i}-\bar{Y}\right)^{2}}}
+$$
+Onde:
+
+$x_i$ e $y_i$ são os valores individuais das variáveis x e y.
+
+$X$ é a média da variável $x$ e $Y$ é a média da variável $y$
+
+$n$ é o número de sujeitos de cada grupo
+
+$$
+\begin{array}{|l|c|}
+\hline \text { Tamanho do Efeito } & r \\
+\hline \text { Pequeno } & 0.10 \\
+\hline \text { Médio } & 0.30 \\
+\hline \text { Grande } & 0.50 \\
+\hline
+\end{array}
+$$
+
+
+
+### Eta($\eta^2$)
+
+$$
+\eta^{2}=\frac{S^{2}_2}{S^{2} \text { total }}
+$$
+
+Onde:
+
+$\boldsymbol{S}_{2}^{2}$ é a variância da intervenção, tratamento ou grupo experimental
+
+$\boldsymbol{S}^{2}_{total}$ é a variância do grupo todo $(\mathrm{n} 1+\mathrm{n} 2)$
+
+
+### Omega($\Omega^2$)
+
+$$
+\omega^{2}=\frac{\overline{x_{1}}-\overline{x_{2}}}{S_{\text {total }}^{2}}
+$$
+
+Onde:
+
+$\mathrm{x}_{1}$ e $\mathrm{x}_{2}$ são as médias de cada grupo
+
+$S_{\text {total }}^{2}$ é a variância total $\left(\mathrm{n}_{1}+\mathrm{n}_{2}\right)$
+
+$\mathrm{n}_{1}$ e $\mathrm{n}_{2}$ são os números de sujeitos de cada grupo
+
+### Cohen ($f^2$)
+
+$$
+f^{2}=\frac{\omega^{2}}{1-\omega^{2}}, \text{sendo }  \omega^{2}=\frac{\overline{x_{1}}-\overline{x_{2}}}{S_{\text {total }}^{2}}
+$$
+$$
+\begin{array}{|l|c|}
+\hline \text { Tamanho do Efeito } & f^{2} \\
+\hline \text { Pequeno } & 0.02 \\
+\hline \text { Médio } & 0.15 \\
+\hline \text { Grande } & 0.35 \\
+\hline
+\end{array}
+$$
+
+# Análise de Poder
+
+Em estudos estatísticos, muitas vezes surge a pergunta: “Quantos indivídios preciso para meu estudo?” Às vezes, a pergunta é formulada assim: “Tenho x número de pessoas disponíveis para este estudo. Vale a pena fazer o estudo?” Perguntas como essas podem ser respondidas por meio da análise de poder, um importante conjunto de técnicas em planejamento e análise de experimentos. A análise de poder busca responder essas perguntas permitindo a determinação do tamanho da amostra necessário para detectar um efeito de um determinado tamanho com um determinado grau de confiança, por exemplo.
+
+Na análise de poder, há quatro elementos que devem ser levados em consideração: Tamanho do efeito, tamanho da amostra, nível de significância e poder do teste, conforme ilustrado na imagem abaixo:
+
+![https://livebook.manning.com/book/r-in-action/chapter-10/4](imagens/power_analysis.png)
+
+O objetivo de uma análise de poder é encontrar um equilíbrio apropriado entre esses fatores, levando em consideração os objetivos do estudo e os recursos disponíveis para o pesquisador.”
+
+## Análise de poder - Teste t não pareado
+
+
+```r
+pwr::pwr.t.test(n = NULL, d = 0.1, sig.level = 0.05, power = 0.8, type = "two.sample", alternative = "two.sided")
+```
+
+```
+## 
+##      Two-sample t test power calculation 
+## 
+##               n = 1570.733
+##               d = 0.1
+##       sig.level = 0.05
+##           power = 0.8
+##     alternative = two.sided
+## 
+## NOTE: n is number in *each* group
+```
+
+```r
+pwr::pwr.t.test(n = NULL, d = 0.3, sig.level = 0.05, power = 0.8, type = "two.sample", alternative = "two.sided")
+```
+
+```
+## 
+##      Two-sample t test power calculation 
+## 
+##               n = 175.3847
+##               d = 0.3
+##       sig.level = 0.05
+##           power = 0.8
+##     alternative = two.sided
+## 
+## NOTE: n is number in *each* group
+```
+
+```r
+pwr::pwr.t.test(n = NULL, d = 0.5, sig.level = 0.05, power = 0.8, type = "two.sample", alternative = "two.sided")
+```
+
+```
+## 
+##      Two-sample t test power calculation 
+## 
+##               n = 63.76561
+##               d = 0.5
+##       sig.level = 0.05
+##           power = 0.8
+##     alternative = two.sided
+## 
+## NOTE: n is number in *each* group
+```
+
+```r
+pwr::pwr.t.test(n = NULL, d = 0.8, sig.level = 0.05, power = 0.8, type = "two.sample", alternative = "two.sided")
+```
+
+```
+## 
+##      Two-sample t test power calculation 
+## 
+##               n = 25.52458
+##               d = 0.8
+##       sig.level = 0.05
+##           power = 0.8
+##     alternative = two.sided
+## 
+## NOTE: n is number in *each* group
+```
+## Análise de poder - Teste t pareado
+
+
+```r
+pwr::pwr.t.test(n = NULL, d = 0.1, sig.level = 0.05, power = 0.8, type = "paired", alternative = "two.sided")
+```
+
+```
+## 
+##      Paired t test power calculation 
+## 
+##               n = 786.8089
+##               d = 0.1
+##       sig.level = 0.05
+##           power = 0.8
+##     alternative = two.sided
+## 
+## NOTE: n is number of *pairs*
+```
+
+```r
+pwr::pwr.t.test(n = NULL, d = 0.3, sig.level = 0.05, power = 0.8, type = "paired", alternative = "two.sided")
+```
+
+```
+## 
+##      Paired t test power calculation 
+## 
+##               n = 89.14938
+##               d = 0.3
+##       sig.level = 0.05
+##           power = 0.8
+##     alternative = two.sided
+## 
+## NOTE: n is number of *pairs*
+```
+
+```r
+pwr::pwr.t.test(n = NULL, d = 0.5, sig.level = 0.05, power = 0.8, type = "paired", alternative = "two.sided")
+```
+
+```
+## 
+##      Paired t test power calculation 
+## 
+##               n = 33.36713
+##               d = 0.5
+##       sig.level = 0.05
+##           power = 0.8
+##     alternative = two.sided
+## 
+## NOTE: n is number of *pairs*
+```
+
+```r
+pwr::pwr.t.test(n = NULL, d = 0.8, sig.level = 0.05, power = 0.8, type = "paired", alternative = "two.sided")
+```
+
+```
+## 
+##      Paired t test power calculation 
+## 
+##               n = 14.30276
+##               d = 0.8
+##       sig.level = 0.05
+##           power = 0.8
+##     alternative = two.sided
+## 
+## NOTE: n is number of *pairs*
+```
+
+Se o verdadeiro efeito for pequeno, é necessário que se tenha amostras grandes para se identificar diferenças entre os tratamentos, mantendo-se constante o nível de significância e o poder do teste.
+
+<!-- # Simulações -->
+
+<!-- ```{r} -->
+<!-- library(DescTools) -->
+<!-- library(rcompanion) -->
+<!-- library(psych) -->
+<!-- #phi=0.1021 -->
+<!-- x11 <-1 -->
+<!-- x12 <-1 -->
+<!-- x21 <-5 -->
+<!-- x22 <-3 -->
+<!-- n <-x11+x12+x21+x22 -->
+<!-- n -->
+<!-- x <-matrix(0,2,2) -->
+<!-- x[1,1] <-x11 -->
+<!-- x[1,2] <-x12 -->
+<!-- x[2,1] <-x21 -->
+<!-- x[2,2] <-x22 -->
+<!-- x -->
+<!-- cohenW(x) -->
+<!-- p <-chisq.test(x)$p.value -->
+<!-- p -->
+<!-- for(i in 2:100){ -->
+<!-- x[1,1] <-x[1,1]+x11 -->
+<!-- x[1,2] <-x[1,2]+x12 -->
+<!-- x[2,1] <-x[2,1]+x21 -->
+<!-- x[2,2] <-x[2,2]+x22 -->
+<!-- p[i] <-chisq.test(x)$p.value -->
+<!-- n[i] <-10*i -->
+<!-- } -->
+
+<!-- #x11() -->
+<!-- plot(n,p,type="l",ylim=c(0,1),xlim=c(0,650),col="red") -->
+<!-- cbind(n,round(p,5)) -->
+
+
+
+
+
+<!-- ``` -->
+
 
 # Referências
 
 - Marcos Douglas Rodrigues de Sousa Principais medidas de magnitude do efeito utilizadas na comparação de dois grupos/ Marcos Douglas Rodrigues de Sousa. – Brasília, 2018-109 p. : il. (algumas color.) ; 30 cm.
 
+- Questões de Significância (Aula dos professores Paulo S. P Silveira (silveira@usp.br) e José O. Siqueira (siqueira@usp.br))
