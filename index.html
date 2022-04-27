@@ -2668,7 +2668,7 @@ effsize::VD.A(grupoa,grupob)</code></pre>
 <pre><code>## 
 ## Vargha and Delaney A
 ## 
-## A estimate: 0.0775 (large)</code></pre>
+## A estimate: 0.1071 (large)</code></pre>
 </div>
 <div id="medida-de-efeito-coeficiente-r" class="section level4" number="3.1.2.3">
 <h4><span class="header-section-number">3.1.2.3</span> Medida de efeito:
@@ -2704,7 +2704,7 @@ p &lt;- wilcox.test(x0,y0,paired=T,exact=F,correct=F)$p.value
 z &lt;- qnorm(1-(p/2))
 z1 &lt;- z/sqrt(10)
 z1</code></pre>
-<pre><code>## [1] 0.04264014</code></pre>
+<pre><code>## [1] 0.6396021</code></pre>
 </div>
 <div id="medida-de-efeito-tau-de-kendall" class="section level4" number="3.1.2.4">
 <h4><span class="header-section-number">3.1.2.4</span> Medida de efeito:
@@ -2847,10 +2847,10 @@ effsize::cohen.d(grupoa,grupob)</code></pre>
 <pre><code>## 
 ## Cohen&#39;s d
 ## 
-## d estimate: -1.842273 (large)
+## d estimate: -2.057043 (large)
 ## 95 percent confidence interval:
 ##     lower     upper 
-## -2.175100 -1.509447</code></pre>
+## -2.401884 -1.712201</code></pre>
 <pre class="r"><code># Exemplo para d de cohen grupos pareados
 x0 &lt;- rnorm(5,2,2.838)
 diff0 &lt;- rnorm(5,1,2.838)</code></pre>
@@ -2862,17 +2862,17 @@ t &lt;- t.test(x0,y0,paired=T)$statistic
 cohen &lt;- t/sqrt(n)
 cohen</code></pre>
 <pre><code>##          t 
-## -0.3799685</code></pre>
+## -0.4943251</code></pre>
 <pre class="r"><code>effsize::cohen.d(x0,y0,paired = TRUE)</code></pre>
 <pre><code>## 
 ## Cohen&#39;s d
 ## 
-## d estimate: -0.1122974 (negligible)
+## d estimate: -0.7594012 (medium)
 ## 95 percent confidence interval:
-##      lower      upper 
-## -0.4180444  0.1934495</code></pre>
+##     lower     upper 
+## -2.557650  1.038848</code></pre>
 <pre class="r"><code>cor(x0,y0)</code></pre>
-<pre><code>## [1] 0.9563269</code></pre>
+<pre><code>## [1] -0.1800143</code></pre>
 </div>
 <div id="medida-de-efeito-g-de-hedges" class="section level4" number="3.1.3.2">
 <h4><span class="header-section-number">3.1.3.2</span> Medida de efeito:
@@ -2924,10 +2924,10 @@ cohen.d(d,f,hedges.correction=TRUE)</code></pre>
 <pre><code>## 
 ## Hedges&#39;s g
 ## 
-## g estimate: -2.200603 (large)
+## g estimate: -2.20234 (large)
 ## 95 percent confidence interval:
 ##     lower     upper 
-## -2.552615 -1.848590</code></pre>
+## -2.554458 -1.850223</code></pre>
 </div>
 <div id="medida-de-efeito-delta-delta-de-glass" class="section level4" number="3.1.3.3">
 <h4><span class="header-section-number">3.1.3.3</span> Medida de efeito:
@@ -2964,7 +2964,7 @@ mediatrat &lt;- mean(tratamento)
 mediacont &lt;- mean(controle)
 delta &lt;- ((mediatrat-mediacont)/desviocont)
 delta</code></pre>
-<pre><code>## [1] 10.5207</code></pre>
+<pre><code>## [1] 9.895752</code></pre>
 <!-- #### Medida de efeito: Psi -->
 </div>
 </div>
@@ -3058,8 +3058,45 @@ significância e poder do teste, conforme ilustrado na imagem abaixo:</p>
 <p>O objetivo de uma análise de poder é encontrar um equilíbrio
 apropriado entre esses fatores, levando em consideração os objetivos do
 estudo e os recursos disponíveis para o pesquisador.”</p>
-<div id="análise-de-poder---teste-t-não-pareado" class="section level2" number="4.1">
+<div id="análise-de-poder---teste-qui-quadrado-não-pareado" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> Análise de poder -
+Teste Qui-Quadrado não pareado</h2>
+<pre class="r"><code>pwr::pwr.chisq.test(w = 0.10, df = 1, sig.level = 0.05, power = 0.80)</code></pre>
+<pre><code>## 
+##      Chi squared power calculation 
+## 
+##               w = 0.1
+##               N = 784.8861
+##              df = 1
+##       sig.level = 0.05
+##           power = 0.8
+## 
+## NOTE: N is the number of observations</code></pre>
+<pre class="r"><code>pwr::pwr.chisq.test(w = 0.30, df = 1, sig.level = 0.05, power = 0.80)</code></pre>
+<pre><code>## 
+##      Chi squared power calculation 
+## 
+##               w = 0.3
+##               N = 87.20954
+##              df = 1
+##       sig.level = 0.05
+##           power = 0.8
+## 
+## NOTE: N is the number of observations</code></pre>
+<pre class="r"><code>pwr::pwr.chisq.test(w = 0.50, df = 1, sig.level = 0.05, power = 0.80)</code></pre>
+<pre><code>## 
+##      Chi squared power calculation 
+## 
+##               w = 0.5
+##               N = 31.39544
+##              df = 1
+##       sig.level = 0.05
+##           power = 0.8
+## 
+## NOTE: N is the number of observations</code></pre>
+</div>
+<div id="análise-de-poder---teste-t-não-pareado" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Análise de poder -
 Teste t não pareado</h2>
 <pre class="r"><code>pwr::pwr.t.test(n = NULL, d = 0.1, sig.level = 0.05, power = 0.8, type = &quot;two.sample&quot;, alternative = &quot;two.sided&quot;)</code></pre>
 <pre><code>## 
@@ -3106,8 +3143,8 @@ Teste t não pareado</h2>
 ## 
 ## NOTE: n is number in *each* group</code></pre>
 </div>
-<div id="análise-de-poder---teste-t-pareado" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Análise de poder -
+<div id="análise-de-poder---teste-t-pareado" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Análise de poder -
 Teste t pareado</h2>
 <pre class="r"><code>pwr::pwr.t.test(n = NULL, d = 0.1, sig.level = 0.05, power = 0.8, type = &quot;paired&quot;, alternative = &quot;two.sided&quot;)</code></pre>
 <pre><code>## 
@@ -3198,6 +3235,8 @@ mantendo-se constante o nível de significância e o poder do teste.</p>
 do efeito utilizadas na comparação de dois grupos/ Marcos Douglas
 Rodrigues de Sousa. – Brasília, 2018-109 p. : il. (algumas color.) ; 30
 cm.</p></li>
+<li><p>J. COHEN. Statistical power analysis for the behavior science.
+Lawrance Eribaum Association, 1988.</p></li>
 <li><p>Questões de Significância (Aula dos professores Paulo S. P
 Silveira (<a href="mailto:silveira@usp.br" class="email">silveira@usp.br</a>) e José O. Siqueira (<a href="mailto:siqueira@usp.br" class="email">siqueira@usp.br</a>))</p></li>
 </ul>

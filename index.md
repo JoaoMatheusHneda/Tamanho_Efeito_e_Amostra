@@ -1243,7 +1243,7 @@ effsize::VD.A(grupoa,grupob)
 ## 
 ## Vargha and Delaney A
 ## 
-## A estimate: 0.0775 (large)
+## A estimate: 0.1071 (large)
 ```
 
 #### Medida de efeito: Coeficiente $r$
@@ -1282,7 +1282,7 @@ z1
 ```
 
 ```
-## [1] 0.04264014
+## [1] 0.6396021
 ```
 
 #### Medida de efeito: $\tau$ de Kendall
@@ -1436,10 +1436,10 @@ effsize::cohen.d(grupoa,grupob)
 ## 
 ## Cohen's d
 ## 
-## d estimate: -1.842273 (large)
+## d estimate: -2.057043 (large)
 ## 95 percent confidence interval:
 ##     lower     upper 
-## -2.175100 -1.509447
+## -2.401884 -1.712201
 ```
 
 
@@ -1462,7 +1462,7 @@ cohen
 
 ```
 ##          t 
-## -0.3799685
+## -0.4943251
 ```
 
 
@@ -1475,10 +1475,10 @@ effsize::cohen.d(x0,y0,paired = TRUE)
 ## 
 ## Cohen's d
 ## 
-## d estimate: -0.1122974 (negligible)
+## d estimate: -0.7594012 (medium)
 ## 95 percent confidence interval:
-##      lower      upper 
-## -0.4180444  0.1934495
+##     lower     upper 
+## -2.557650  1.038848
 ```
 
 
@@ -1487,7 +1487,7 @@ cor(x0,y0)
 ```
 
 ```
-## [1] 0.9563269
+## [1] -0.1800143
 ```
 
 
@@ -1538,10 +1538,10 @@ cohen.d(d,f,hedges.correction=TRUE)
 ## 
 ## Hedges's g
 ## 
-## g estimate: -2.200603 (large)
+## g estimate: -2.20234 (large)
 ## 95 percent confidence interval:
 ##     lower     upper 
-## -2.552615 -1.848590
+## -2.554458 -1.850223
 ```
 
 #### Medida de efeito: Delta $\Delta$ de Glass
@@ -1579,7 +1579,7 @@ delta
 ```
 
 ```
-## [1] 10.5207
+## [1] 9.895752
 ```
 
 <!-- #### Medida de efeito: Psi -->
@@ -1662,6 +1662,61 @@ Na análise de poder, há quatro elementos que devem ser levados em consideraç�
 ![https://livebook.manning.com/book/r-in-action/chapter-10/4](imagens/power_analysis.png)
 
 O objetivo de uma análise de poder é encontrar um equilíbrio apropriado entre esses fatores, levando em consideração os objetivos do estudo e os recursos disponíveis para o pesquisador.”
+
+## Análise de poder - Teste Qui-Quadrado não pareado
+
+
+```r
+pwr::pwr.chisq.test(w = 0.10, df = 1, sig.level = 0.05, power = 0.80)
+```
+
+```
+## 
+##      Chi squared power calculation 
+## 
+##               w = 0.1
+##               N = 784.8861
+##              df = 1
+##       sig.level = 0.05
+##           power = 0.8
+## 
+## NOTE: N is the number of observations
+```
+
+```r
+pwr::pwr.chisq.test(w = 0.30, df = 1, sig.level = 0.05, power = 0.80)
+```
+
+```
+## 
+##      Chi squared power calculation 
+## 
+##               w = 0.3
+##               N = 87.20954
+##              df = 1
+##       sig.level = 0.05
+##           power = 0.8
+## 
+## NOTE: N is the number of observations
+```
+
+```r
+pwr::pwr.chisq.test(w = 0.50, df = 1, sig.level = 0.05, power = 0.80)
+```
+
+```
+## 
+##      Chi squared power calculation 
+## 
+##               w = 0.5
+##               N = 31.39544
+##              df = 1
+##       sig.level = 0.05
+##           power = 0.8
+## 
+## NOTE: N is the number of observations
+```
+
 
 ## Análise de poder - Teste t não pareado
 
@@ -1851,5 +1906,8 @@ Se o verdadeiro efeito for pequeno, é necessário que se tenha amostras grandes
 # Referências
 
 - Marcos Douglas Rodrigues de Sousa Principais medidas de magnitude do efeito utilizadas na comparação de dois grupos/ Marcos Douglas Rodrigues de Sousa. – Brasília, 2018-109 p. : il. (algumas color.) ; 30 cm.
+
+- J. COHEN. Statistical power analysis for the behavior science. Lawrance Eribaum
+Association, 1988.
 
 - Questões de Significância (Aula dos professores Paulo S. P Silveira (silveira@usp.br) e José O. Siqueira (siqueira@usp.br))

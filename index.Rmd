@@ -1493,6 +1493,15 @@ Na análise de poder, há quatro elementos que devem ser levados em consideraç�
 
 O objetivo de uma análise de poder é encontrar um equilíbrio apropriado entre esses fatores, levando em consideração os objetivos do estudo e os recursos disponíveis para o pesquisador.”
 
+## Análise de poder - Teste Qui-Quadrado não pareado
+
+```{r}
+pwr::pwr.chisq.test(w = 0.10, df = 1, sig.level = 0.05, power = 0.80)
+pwr::pwr.chisq.test(w = 0.30, df = 1, sig.level = 0.05, power = 0.80)
+pwr::pwr.chisq.test(w = 0.50, df = 1, sig.level = 0.05, power = 0.80)
+```
+
+
 ## Análise de poder - Teste t não pareado
 
 ```{r}
@@ -1557,5 +1566,8 @@ Se o verdadeiro efeito for pequeno, é necessário que se tenha amostras grandes
 # Referências
 
 - Marcos Douglas Rodrigues de Sousa Principais medidas de magnitude do efeito utilizadas na comparação de dois grupos/ Marcos Douglas Rodrigues de Sousa. – Brasília, 2018-109 p. : il. (algumas color.) ; 30 cm.
+
+- J. COHEN. Statistical power analysis for the behavior science. Lawrance Eribaum
+Association, 1988.
 
 - Questões de Significância (Aula dos professores Paulo S. P Silveira (silveira@usp.br) e José O. Siqueira (siqueira@usp.br))
