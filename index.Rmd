@@ -1,5 +1,5 @@
 ---
-title: "Testes estatísticos, tamanho do efeito e poder do teste"
+title: "Questões de significância: Poder do teste, testes estatísticos e tamanho do efeito"
 #author: João Matheus Slujala Krüger Taborda Hneda - Mestrando em Bioestatística (UEM)
 date: "28/04/2022" 
 output:
@@ -810,7 +810,7 @@ As medidas de efeito podem ser divididas em duas famílias:
 
 A família d (consistindo em diferenças médias padronizadas) e a família r (medidas de força de associação).
 
-Também podem ser divididas pelo número de grupos
+Também podem ser divididas pelo número de grupos e nível de mensuração da variável resposta.
 
 ## Para 2 grupos
 
@@ -1519,9 +1519,15 @@ delta
 
 [root mean square standardized effect (RMSSE)]
 
+<!-- $$ -->
+<!-- \Psi=\sqrt{\left(\frac{1}{k-1}\right) \frac{\Sigma\left(\bar{x}_{j}-\bar{X}\right)^{2}}{M S_{\text {error }}}} -->
+<!-- $$ -->
+
+Pode calcular-se o TDE Psi $(\Psi)$ ou $f^{*}$ de Steiger e Fouladi ou efeito padronizado quadrático médio [root mean square standardized effect (RMSSE)] (Steiger, 2004; Steiger e Fouladi, 2016). O índice RMSSE representa a diferença coletiva de todo o modelo padronizado pela raiz quadrática média:
 $$
-\Psi=\sqrt{\left(\frac{1}{k-1}\right) \frac{\Sigma\left(\bar{x}_{j}-\bar{X}\right)^{2}}{M S_{\text {error }}}}
+R M S S E=\sqrt{\frac{\sum(\overline{\mathrm{y}}-M G)^{2}}{(k-1) Q M_{\text {erro }}}} \quad \text { Equação } 1
 $$
+Nesta equação, $\bar{y}$ é a média de cada grupo; MG a média global; $\Sigma$ é o somatório; $k$ o número de grupos e QM erro o quadrado médio de erro que corresponde à variância de erro dividida pelo $N$ menos o número de grupos $\left(Q M_{\text {erro }}=S Q_{\text {erro }} /(N-k) .^{3}\right.$
 
 
 $$
@@ -1769,6 +1775,15 @@ Se o verdadeiro efeito for pequeno, é necessário que se tenha amostras grandes
 
 
 ![Sample Size Calculation with R - https://med.und.edu/daccota/_files/pdfs/berdc_resource_pdfs/sample_size_r_module.pdf](imagens/sample_size_functions.png)
+
+
+![](imagens/artigo1.png)
+
+![](imagens/artigo2.png)
+
+
+![](imagens/artigo3.png)
+
 
 # Referências
 
