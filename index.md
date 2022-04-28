@@ -87,6 +87,11 @@ Portanto, a pergunta da pesquisa costuma estar expressa em H1, mas todo o proced
 
 ![](imagens/hipotese_nula_e_alternativa.png)
 
+- O Erro Tipo 1 é a decisão de rejeitar H0, quando ela é verdadeira.
+- O Erro Tipo 2 é a decisão de não rejeitar H0, quando ela é falsa.
+- O poder do teste está relacionado com a decisão de rejeitar HO, quando ela é falsa. É o complementar da probabilidade do Erro Tipo 2.
+
+
 ## Tamanho da amostra
 
 ![](imagens/tamanho_amostra.png)
@@ -110,17 +115,15 @@ importância, porque amostras desnecessariamente grandes acarretam
 desperdício de tempo e dinheiro; e amostras demasiadamente pequenas
 podem levar a resultados não confiáveis.
 
-<!-- ## Valor p -->
+## Valor p
 
-<!-- Agresti & Finlay (2012, p.171) dizem: -->
+Agresti & Finlay (2012, p.171) dizem:
 
-<!-- “O valor-p é a probabilidade de que a estatística de teste seja igual ou mais extrema que o valor observado na direção prevista pela hipótese alternativa (H1), presumindo que a hipótese nula (H0) é verdadeira.” -->
+“O valor-p é a probabilidade de que a estatística de teste seja igual ou mais extrema que o valor observado na direção prevista pela hipótese alternativa (H1), presumindo que a hipótese nula (H0) é verdadeira.”
 
-<!-- É comum presumir-se que um valor p de 0,001 reflete um grande efeito, enquanto um valor p de 0,05 reflete um efeito moderado, por exemplo. Isso não é necessariamente correto pois o valor p é uma função do tamanho da amostra. Uma medida mais adequada para analisar a magnitude do efeito é o tamanho do efeito. -->
+É comum presumir-se que um valor p de 0,001 reflete um grande efeito, enquanto um valor p de 0,05 reflete um efeito moderado, por exemplo. Isso não é necessariamente correto pois o valor p é uma função do tamanho da amostra. Uma medida mais adequada para analisar a magnitude do efeito é o tamanho do efeito.
 
-<!-- ```{r echo=FALSE} -->
-<!-- knitr::include_graphics(path="imagens/P-valor.gif") -->
-<!-- ``` -->
+![](imagens/P-valor.gif)<!-- -->
 
 
 ## Tamanho de efeito
@@ -1352,7 +1355,7 @@ effsize::VD.A(grupoa,grupob)
 ## 
 ## Vargha and Delaney A
 ## 
-## A estimate: 0.0965 (large)
+## A estimate: 0.0618 (large)
 ```
 
 #### Medida de efeito: Coeficiente $r$
@@ -1391,7 +1394,7 @@ z1
 ```
 
 ```
-## [1] 0.298481
+## [1] 0.6396021
 ```
 
 #### Medida de efeito: $\tau$ de Kendall
@@ -1545,10 +1548,10 @@ effsize::cohen.d(grupoa,grupob)
 ## 
 ## Cohen's d
 ## 
-## d estimate: -1.896239 (large)
+## d estimate: -1.934946 (large)
 ## 95 percent confidence interval:
 ##     lower     upper 
-## -2.232000 -1.560479
+## -2.272846 -1.597045
 ```
 
 
@@ -1753,7 +1756,7 @@ ggplot2::ggplot(data=mtcars,ggplot2::aes(x=mpg, y=wt)) +
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![](index_files/figure-html/unnamed-chunk-49-1.png)<!-- -->
+![](index_files/figure-html/unnamed-chunk-50-1.png)<!-- -->
 
 
 ## Para 3 grupos ou mais
