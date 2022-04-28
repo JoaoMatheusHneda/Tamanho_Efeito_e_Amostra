@@ -1339,7 +1339,7 @@ $\delta$ representa o resultado do ES $\delta$ de Cliff (3.9).
 
 Os níveis de magnitude do efeito $(E S)$ estão representados na Tabela 14 [Vargha \& Delaney, 2000].
 
-![](imagens/tabela_13_contingencia.png)
+![](imagens/tabela_A_Vargha-Delaney.png)
 
 
 
@@ -1355,7 +1355,7 @@ effsize::VD.A(grupoa,grupob)
 ## 
 ## Vargha and Delaney A
 ## 
-## A estimate: 0.0618 (large)
+## A estimate: 0.0979 (large)
 ```
 
 #### Medida de efeito: Coeficiente $r$
@@ -1394,7 +1394,7 @@ z1
 ```
 
 ```
-## [1] 0.6396021
+## [1] 0.3837613
 ```
 
 #### Medida de efeito: $\tau$ de Kendall
@@ -1548,10 +1548,10 @@ effsize::cohen.d(grupoa,grupob)
 ## 
 ## Cohen's d
 ## 
-## d estimate: -1.934946 (large)
+## d estimate: -1.856267 (large)
 ## 95 percent confidence interval:
 ##     lower     upper 
-## -2.272846 -1.597045
+## -2.189849 -1.522685
 ```
 
 
@@ -1671,46 +1671,6 @@ delta
 ## [1] 0.7233327
 ```
 
-#### Medida de efeito: Psi
-
-[root mean square standardized effect (RMSSE)]
-
-<!-- $$ -->
-<!-- \Psi=\sqrt{\left(\frac{1}{k-1}\right) \frac{\Sigma\left(\bar{x}_{j}-\bar{X}\right)^{2}}{M S_{\text {error }}}} -->
-<!-- $$ -->
-
-Pode calcular-se o TDE Psi $(\Psi)$ ou $f^{*}$ de Steiger e Fouladi ou efeito padronizado quadrático médio [root mean square standardized effect (RMSSE)] (Steiger, 2004; Steiger e Fouladi, 2016). O índice RMSSE representa a diferença coletiva de todo o modelo padronizado pela raiz quadrática média:
-$$
-R M S S E=\sqrt{\frac{\sum(\overline{\mathrm{y}}-M G)^{2}}{(k-1) Q M_{\text {erro }}}} \quad \text { Equação } 1
-$$
-Nesta equação, $\bar{y}$ é a média de cada grupo; MG a média global; $\Sigma$ é o somatório; $k$ o número de grupos e QM erro o quadrado médio de erro que corresponde à variância de erro dividida pelo $N$ menos o número de grupos $\left(Q M_{\text {erro }}=S Q_{\text {erro }} /(N-k) .^{3}\right.$
-
-
-$$
-\begin{array}{|l|c|}
-\hline \text { Tamanho do Efeito } & \Psi \\
-\hline \text { Pequeno } & \mathbf{0 . 1 0} \\
-\hline \text { Médio } & \mathbf{0 . 2 5} \\
-\hline \text { Grande } & \mathbf{0 . 4 0} \\
-\hline
-\end{array}
-$$
-
-<!-- ```{r} -->
-<!-- data("marketing", package = "datarium") -->
-<!-- model <- lm(sales ~ youtube + facebook + newspaper, data = marketing) -->
-<!-- # RMSSE function for one-way ANOVA model: -->
-<!-- rmsse <- function(x,g){ -->
-<!-- mx = tapply(x,g,mean) -->
-<!-- ng = nlevels(g) -->
-<!-- nx = length(x) -->
-<!-- msd = sum((mx-mean(x))^2)/(ng-1) -->
-<!-- mse = sum((mx[g]-x)^2)/(nx-ng) -->
-<!-- sqrt(msd/mse) -->
-<!-- } -->
-
-<!-- ``` -->
-
 
 #### Medida de efeito: Pearson (r^2)
 
@@ -1759,6 +1719,49 @@ ggplot2::ggplot(data=mtcars,ggplot2::aes(x=mpg, y=wt)) +
 ![](index_files/figure-html/unnamed-chunk-50-1.png)<!-- -->
 
 
+#### Medida de efeito: Psi
+
+[root mean square standardized effect (RMSSE)]
+
+<!-- $$ -->
+<!-- \Psi=\sqrt{\left(\frac{1}{k-1}\right) \frac{\Sigma\left(\bar{x}_{j}-\bar{X}\right)^{2}}{M S_{\text {error }}}} -->
+<!-- $$ -->
+
+Pode se calcular o TDE Psi $(\Psi)$ ou $f^{*}$ de Steiger e Fouladi ou efeito padronizado quadrático médio [root mean square standardized effect (RMSSE)] (Steiger, 2004; Steiger e Fouladi, 2016). O índice RMSSE representa a diferença coletiva de todo o modelo padronizado pela raiz quadrática média:
+
+
+$$
+R M S S E=\sqrt{\frac{\sum(\overline{\mathrm{y}}-M G)^{2}}{(k-1) Q M_{\text {erro }}}} \quad \text { Equação } 1
+$$
+Nesta equação, $\bar{y}$ é a média de cada grupo; MG a média global; $\Sigma$ é o somatório; $k$ o número de grupos e QM erro o quadrado médio de erro que corresponde à variância de erro dividida pelo $N$ menos o número de grupos $\left(Q M_{\text {erro }}=S Q_{\text {erro }} /(N-k) .^{3}\right.$
+
+
+$$
+\begin{array}{|l|c|}
+\hline \text { Tamanho do Efeito } & \Psi \\
+\hline \text { Pequeno } & \mathbf{0 . 1 0} \\
+\hline \text { Médio } & \mathbf{0 . 2 5} \\
+\hline \text { Grande } & \mathbf{0 . 4 0} \\
+\hline
+\end{array}
+$$
+
+<!-- ```{r} -->
+<!-- data("marketing", package = "datarium") -->
+<!-- model <- lm(sales ~ youtube + facebook + newspaper, data = marketing) -->
+<!-- # RMSSE function for one-way ANOVA model: -->
+<!-- rmsse <- function(x,g){ -->
+<!-- mx = tapply(x,g,mean) -->
+<!-- ng = nlevels(g) -->
+<!-- nx = length(x) -->
+<!-- msd = sum((mx-mean(x))^2)/(ng-1) -->
+<!-- mse = sum((mx[g]-x)^2)/(nx-ng) -->
+<!-- sqrt(msd/mse) -->
+<!-- } -->
+
+<!-- ``` -->
+
+
 ## Para 3 grupos ou mais
 
 ### Eta($\eta^2$)
@@ -1785,6 +1788,10 @@ summary(eruption.lm)$r.squared
 ```
 ## [1] 0.8114608
 ```
+
+
+
+
 
 ```r
 anova(eruption.lm)$'Sum Sq'[1]/sum(anova(eruption.lm)$'Sum Sq')
