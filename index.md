@@ -34,9 +34,111 @@ output:
 
 Boa parte dos testes estatísticos usam o paradigma da testagem da hipótese nula de Neyman-Pearson. É a abordagem frequentista (também chamada de clássica ou assintótica).
 
-O contraponto a esta abordagem foi iniciado por Cohen (1990) ao afirmar que existe algo além da significância estatística. Sua proposta é utilizar a significância prática para quantificar a intensidade dos efeitos em vez de somente suas existências.
+O contraponto a esta abordagem foi iniciado por Cohen (1990) ao afirmar que existe algo além da **significância estatística.** Sua proposta é utilizar a **significância prática** para quantificar a intensidade dos efeitos em vez de somente suas existências.
 
-Em oposição à abordagem assintótica está a abordagem bayesiana. Nesta, n não precisa tender para o infinito para que os testes sejam válidos. A inferência bayesiana, portanto, é adaptada ao tamanho da amostra, sem necessidade de se imaginar infinitas repetições do experimento como fazemos, por exemplo, com o bootstrapping.
+<!-- Em oposição à abordagem assintótica está a abordagem bayesiana. Nesta, n não precisa tender para o infinito para que os testes sejam válidos. A inferência bayesiana, portanto, é adaptada ao tamanho da amostra, sem necessidade de se imaginar infinitas repetições do experimento como fazemos, por exemplo, com o bootstrapping. -->
+
+
+# Análise de Poder
+
+Em estudos estatísticos, muitas vezes surge a pergunta: “Quantos indivíduos preciso para meu estudo?” Às vezes, a pergunta é formulada assim: “Tenho x número de pessoas disponíveis para este estudo. Vale a pena fazer o estudo?” Perguntas como essas podem ser respondidas por meio da análise de poder, um importante conjunto de técnicas em planejamento e análise de experimentos. A análise de poder busca responder essas perguntas permitindo a determinação do tamanho da amostra necessário para detectar um efeito de um determinado tamanho com um determinado grau de confiança, por exemplo.
+
+Na análise de poder, há quatro elementos que devem ser levados em consideração: Nível de significância, poder do teste, tamanho da amostra e tamanho do efeito, conforme ilustrado na imagem abaixo:
+
+![https://livebook.manning.com/book/r-in-action/chapter-10/4](imagens/power_analysis.png)
+
+O objetivo de uma análise de poder é encontrar um equilíbrio apropriado entre esses fatores, levando em consideração os objetivos do estudo e os recursos disponíveis para o pesquisador.”
+
+
+**R packages**
+
+- pwr
+(Desenvolvido por Stéphane Champely, implementa métodos de Cohen para os testes de proporção, ANOVA unifatorial balanceada, $t$, qui-quadrado, correlação e modelo linear geral).
+- pwr2
+(Desenvolvido por Lu P, Liu J e Koestler D, para ANOVA unifatorial e bifatorial).
+- pwr2ppl
+- samplingbook
+- TrialSize
+- MBESS
+- webpower
+- asypow
+- PwrGSD
+- pamm
+- Longpower
+- powerSurvepi
+- powerpkg
+- powerGWASinteraction
+- pedantics
+- gap
+- ssize.fdr
+
+
+Para aprender a utilizar alguns dos pacotes citados consulte:
+
+R in action, capítulo 10, disponível em https://livebook.manning.com/book/r-in-action/chapter-10/140
+
+Pedrotti LG (2018) Tamanho de amostra e poder no Software R. Instituto de Matemática e Estatística. UFRGS, disponível em https://www.lume.ufrgs.br/handle/10183/175312
+
+## Hipóteses nula e alternativa
+
+Todo teste estatístico enuncia, pelo menos, as hipóteses nula e alternativa. A hipótese nula ou H0 sempre declara que não existe efeito na população. A hipótese alternativa, Ha ou H1 é a nossa previsão de como condições específicas podem estar relacionadas.
+
+Portanto, a pergunta da pesquisa costuma estar expressa em H1, mas todo o procedimento testa apenas H0. Evidência a favor de H1, consequentemente, é obtida por exclusão. Este é o motivo para que, no jargão dos estatísticos, a hipótese nula é rejeitada ou a hipótese nula não é rejeitada, e não se enuncia aceitação de nenhuma das duas.
+
+![](imagens/hipotese_nula_e_alternativa.png)
+
+## Tamanho da amostra
+
+![](imagens/tamanho_amostra.png)
+
+- **População.** Toda questão de pesquisa define um universo de objetos aos
+quais os resultados do estudo deverão ser aplicados.
+A população alvo, também chamada população estudada, é composta
+de elementos distintos possuindo um certo número de características
+comuns (pelo menos).
+Estes elementos, chamados de unidades populacionais, são as unidades
+de análise sobre as quais serão recolhidas informações.
+
+- **Censo:** Pesquisas utilizando todos os elementos da população.
+Observação: Desvantagem quando a população é muito grande.
+
+- **Amostra:** É qualquer subconjunto da população. Pesquisas utilizando
+amostras da população, denominam-se pesquisas por amostragem
+
+A determinação do tamanho da amostra é um problema de grande
+importância, porque amostras desnecessariamente grandes acarretam
+desperdício de tempo e dinheiro; e amostras demasiadamente pequenas
+podem levar a resultados não confiáveis.
+
+<!-- ## Valor p -->
+
+<!-- Agresti & Finlay (2012, p.171) dizem: -->
+
+<!-- “O valor-p é a probabilidade de que a estatística de teste seja igual ou mais extrema que o valor observado na direção prevista pela hipótese alternativa (H1), presumindo que a hipótese nula (H0) é verdadeira.” -->
+
+<!-- É comum presumir-se que um valor p de 0,001 reflete um grande efeito, enquanto um valor p de 0,05 reflete um efeito moderado, por exemplo. Isso não é necessariamente correto pois o valor p é uma função do tamanho da amostra. Uma medida mais adequada para analisar a magnitude do efeito é o tamanho do efeito. -->
+
+<!-- ```{r echo=FALSE} -->
+<!-- knitr::include_graphics(path="imagens/P-valor.gif") -->
+<!-- ``` -->
+
+
+## Tamanho de efeito
+
+Normalmente, pesquisadores e médicos se preocupam com o **tamanho do efeito**; a questão de se o efeito é nulo ou não é de interesse relativamente menor.
+
+<!-- (Um estudo que produz um valor p de precisamente 0,05 renderá um intervalo de confiança de 95% que começa (ou termina) precisamente em 0) -->
+
+Por exemplo, o clínico pode recomendar um medicamento, apesar de seu potencial para efeitos colaterais, se ele se sentir confortável com o fato de que aumenta a proporção de remissão em alguma quantidade específica, como 20%, 30% ou 40%.
+
+Segundo Borenstein et al. (2008), no capítulo 2:
+
+"O termo **tamanho do efeito** se refere à *magnitude do efeito sob a hipótese alternativa*.
+
+A natureza do tamanho do efeito irá variar de um **procedimento estatístico** para o próximo (pode ser a diferença nas proporções de cura, ou uma diferença média padronizada, ou um coeficiente de correlação), mas sua função na análise de poder é a mesma em todos os procedimentos. Por isso, é importante conhecer os diferentes testes estatísticos disponíveis para realizar a análise de poder, cálculo do tamanho da amostra e do tamanho do efeito.
+
+
+
 
 # Testes estatísticos
 
@@ -630,9 +732,16 @@ t.test(x,y,paired=TRUE)
 ```
 
 
+
 <!-- ## Para 3 grupos ou mais -->
 
 # Medidas de Efeito
+
+As medidas de efeito podem ser divididas em duas famílias:
+
+A família d (consistindo em diferenças médias padronizadas) e a família r (medidas de força de associação).
+
+Também podem ser divididas pelo número de grupos
 
 ## Para 2 grupos
 
@@ -1243,7 +1352,7 @@ effsize::VD.A(grupoa,grupob)
 ## 
 ## Vargha and Delaney A
 ## 
-## A estimate: 0.1071 (large)
+## A estimate: 0.0756 (large)
 ```
 
 #### Medida de efeito: Coeficiente $r$
@@ -1282,7 +1391,7 @@ z1
 ```
 
 ```
-## [1] 0.6396021
+## [1] 0.5543219
 ```
 
 #### Medida de efeito: $\tau$ de Kendall
@@ -1436,35 +1545,20 @@ effsize::cohen.d(grupoa,grupob)
 ## 
 ## Cohen's d
 ## 
-## d estimate: -2.057043 (large)
+## d estimate: -2.293015 (large)
 ## 95 percent confidence interval:
 ##     lower     upper 
-## -2.401884 -1.712201
+## -2.652034 -1.933995
 ```
 
 
 ```r
+set.seed(123)
 # Exemplo para d de cohen grupos pareados
 x0 <- rnorm(5,2,2.838)
 diff0 <- rnorm(5,1,2.838)
-```
-
-
-```r
 y0 <- x0+diff0
-n <- 5
-nx <- length(x0)
-ny <- length(y0)
-t <- t.test(x0,y0,paired=T)$statistic
-cohen <- t/sqrt(n)
-cohen
 ```
-
-```
-##          t 
-## -0.4943251
-```
-
 
 
 ```r
@@ -1475,20 +1569,12 @@ effsize::cohen.d(x0,y0,paired = TRUE)
 ## 
 ## Cohen's d
 ## 
-## d estimate: -0.7594012 (medium)
+## d estimate: -0.4125711 (small)
 ## 95 percent confidence interval:
 ##     lower     upper 
-## -2.557650  1.038848
+## -2.086600  1.261458
 ```
 
-
-```r
-cor(x0,y0)
-```
-
-```
-## [1] -0.1800143
-```
 
 
 
@@ -1538,10 +1624,10 @@ cohen.d(d,f,hedges.correction=TRUE)
 ## 
 ## Hedges's g
 ## 
-## g estimate: -2.20234 (large)
+## g estimate: -2.008698 (large)
 ## 95 percent confidence interval:
 ##     lower     upper 
-## -2.554458 -1.850223
+## -2.349460 -1.667936
 ```
 
 #### Medida de efeito: Delta $\Delta$ de Glass
@@ -1569,7 +1655,7 @@ O resultado do valor obtido pela medida $\Delta$ de Glass é interpretado de for
 
 ```r
 tratamento <- rnorm(50,mean=35)
-controle <- rnorm(50,mean=25)
+controle <- rnorm(50,mean=34)
 desviotrat <- sqrt(var(tratamento))
 desviocont <- sqrt(var(controle))
 mediatrat <- mean(tratamento)
@@ -1579,14 +1665,45 @@ delta
 ```
 
 ```
-## [1] 9.895752
+## [1] 0.7233327
 ```
 
-<!-- #### Medida de efeito: Psi -->
+#### Medida de efeito: Psi
 
-## Para 3 grupos ou mais
+[root mean square standardized effect (RMSSE)]
 
-### Pearson ($r^2$)
+$$
+\Psi=\sqrt{\left(\frac{1}{k-1}\right) \frac{\Sigma\left(\bar{x}_{j}-\bar{X}\right)^{2}}{M S_{\text {error }}}}
+$$
+
+
+$$
+\begin{array}{|l|c|}
+\hline \text { Tamanho do Efeito } & \Psi \\
+\hline \text { Pequeno } & \mathbf{0 . 1 0} \\
+\hline \text { Médio } & \mathbf{0 . 2 5} \\
+\hline \text { Grande } & \mathbf{0 . 4 0} \\
+\hline
+\end{array}
+$$
+
+<!-- ```{r} -->
+<!-- data("marketing", package = "datarium") -->
+<!-- model <- lm(sales ~ youtube + facebook + newspaper, data = marketing) -->
+<!-- # RMSSE function for one-way ANOVA model: -->
+<!-- rmsse <- function(x,g){ -->
+<!-- mx = tapply(x,g,mean) -->
+<!-- ng = nlevels(g) -->
+<!-- nx = length(x) -->
+<!-- msd = sum((mx-mean(x))^2)/(ng-1) -->
+<!-- mse = sum((mx[g]-x)^2)/(nx-ng) -->
+<!-- sqrt(msd/mse) -->
+<!-- } -->
+
+<!-- ``` -->
+
+
+#### Medida de efeito: Pearson (r^2)
 
 $$
 r=\frac{\sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)\left(Y_{i}-\bar{Y}\right)}{\sqrt{\sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)^{2}} \sqrt{\sum_{i=1}^{n}\left(Y_{i}-\bar{Y}\right)^{2}}}
@@ -1599,6 +1716,7 @@ $X$ é a média da variável $x$ e $Y$ é a média da variável $y$
 
 $n$ é o número de sujeitos de cada grupo
 
+
 $$
 \begin{array}{|l|c|}
 \hline \text { Tamanho do Efeito } & r \\
@@ -1610,60 +1728,308 @@ $$
 $$
 
 
+```r
+cor(mtcars$mpg, mtcars$wt, method="pearson")
+```
+
+```
+## [1] -0.8676594
+```
+
+
+```r
+ggplot2::ggplot(data=mtcars,ggplot2::aes(x=mpg, y=wt)) + 
+    ggplot2::geom_point() +
+    ggplot2::geom_smooth(method = "lm")
+```
+
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+![](index_files/figure-html/unnamed-chunk-49-1.png)<!-- -->
+
+
+## Para 3 grupos ou mais
 
 ### Eta($\eta^2$)
 
-$$
-\eta^{2}=\frac{S^{2}_2}{S^{2} \text { total }}
-$$
+<!-- $$ -->
+<!-- \eta^{2}=\frac{S^{2}_{trat}}{S^{2} \text { total }} -->
+<!-- $$ -->
 
-Onde:
+<!-- Onde: -->
 
-$\boldsymbol{S}_{2}^{2}$ é a variância da intervenção, tratamento ou grupo experimental
+<!-- $\boldsymbol{S}_{2}^{2}$ é a variância da intervenção, tratamento ou grupo experimental -->
 
-$\boldsymbol{S}^{2}_{total}$ é a variância do grupo todo $(\mathrm{n} 1+\mathrm{n} 2)$
+<!-- $\boldsymbol{S}^{2}_{total}$ é a variância do grupo todo $(\mathrm{n} 1+\mathrm{n} 2)$ -->
 
 
-### Omega($\Omega^2$)
 
-$$
-\omega^{2}=\frac{\overline{x_{1}}-\overline{x_{2}}}{S_{\text {total }}^{2}}
-$$
 
-Onde:
+```r
+# Balanced ANOVAs
+eruption.lm <-  lm(eruptions ~ waiting, data=faithful)
+summary(eruption.lm)$r.squared 
+```
 
-$\mathrm{x}_{1}$ e $\mathrm{x}_{2}$ são as médias de cada grupo
+```
+## [1] 0.8114608
+```
 
-$S_{\text {total }}^{2}$ é a variância total $\left(\mathrm{n}_{1}+\mathrm{n}_{2}\right)$
+```r
+anova(eruption.lm)$'Sum Sq'[1]/sum(anova(eruption.lm)$'Sum Sq')
+```
 
-$\mathrm{n}_{1}$ e $\mathrm{n}_{2}$ são os números de sujeitos de cada grupo
+```
+## [1] 0.8114608
+```
+
+
+
+```r
+rstatix::eta_squared(eruption.lm)
+```
+
+```
+##   waiting 
+## 0.8114608
+```
+
+```r
+effectsize::eta_squared(eruption.lm)
+```
+
+```
+## Registered S3 method overwritten by 'parameters':
+##   method                         from      
+##   format.parameters_distribution datawizard
+```
+
+```
+## For one-way between subjects designs, partial eta squared is equivalent to eta squared.
+## Returning eta squared.
+```
+
+```
+## # Effect Size for ANOVA
+## 
+## Parameter | Eta2 |       95% CI
+## -------------------------------
+## waiting   | 0.81 | [0.78, 1.00]
+## 
+## - One-sided CIs: upper bound fixed at (1).
+```
+
+```r
+effectsize::eta_squared(eruption.lm)$Eta2
+```
+
+```
+## For one-way between subjects designs, partial eta squared is equivalent to eta squared.
+## Returning eta squared.
+```
+
+```
+## [1] 0.8114608
+```
+
+
+
+```r
+data("marketing", package = "datarium")
+model <- lm(sales ~ youtube + facebook + newspaper, data = marketing)
+effectsize::eta_squared(model)
+```
+
+```
+## # Effect Size for ANOVA (Type I)
+## 
+## Parameter | Eta2 (partial) |       95% CI
+## -----------------------------------------
+## youtube   |           0.86 | [0.83, 1.00]
+## facebook  |           0.74 | [0.69, 1.00]
+## newspaper |       1.59e-04 | [0.00, 1.00]
+## 
+## - One-sided CIs: upper bound fixed at (1).
+```
+
+```r
+effectsize::eta_squared(model)$Eta2
+```
+
+```
+## [1] 0.8561711483 0.7351530751 0.0001593014
+```
+
+
+### Omega($\omega^2$)
+
+<!-- $$ -->
+<!-- \omega^{2}=\frac{\overline{x_{1}}-\overline{x_{2}}}{S_{\text {total }}^{2}} -->
+<!-- $$ -->
+
+<!-- Onde: -->
+
+<!-- $\mathrm{x}_{1}$ e $\mathrm{x}_{2}$ são as médias de cada grupo -->
+
+<!-- $S_{\text {total }}^{2}$ é a variância total $\left(\mathrm{n}_{1}+\mathrm{n}_{2}\right)$ -->
+
+<!-- $\mathrm{n}_{1}$ e $\mathrm{n}_{2}$ são os números de sujeitos de cada grupo -->
+
+
+
+<!-- ```{r} -->
+<!-- omega.sq <- function(mod){ -->
+<!-- atab = anova(mod) -->
+<!-- ssb = atab[["Sum Sq"]][1] -->
+<!-- ssw = atab[["Sum Sq"]][2] -->
+<!-- dfb = atab[["Df"]][1] -->
+<!-- msw = atab[["Mean Sq"]][2] -->
+<!-- (ssb - dfb*msw) / (ssb + ssw + msw) -->
+<!-- } -->
+<!-- omega.sq(eruption.lm) -->
+<!-- ``` -->
+
+
+
+```r
+effectsize::omega_squared(eruption.lm)
+```
+
+```
+## For one-way between subjects designs, partial omega squared is equivalent to omega squared.
+## Returning omega squared.
+```
+
+```
+## # Effect Size for ANOVA
+## 
+## Parameter | Omega2 |       95% CI
+## ---------------------------------
+## waiting   |   0.81 | [0.78, 1.00]
+## 
+## - One-sided CIs: upper bound fixed at (1).
+```
+
+```r
+effectsize::omega_squared(eruption.lm)$Omega2
+```
+
+```
+## For one-way between subjects designs, partial omega squared is equivalent to omega squared.
+## Returning omega squared.
+```
+
+```
+## [1] 0.8101967
+```
+
+
+```r
+effectsize::omega_squared(model)
+```
+
+```
+## # Effect Size for ANOVA (Type I)
+## 
+## Parameter | Omega2 (partial) |       95% CI
+## -------------------------------------------
+## youtube   |             0.85 | [0.83, 1.00]
+## facebook  |             0.73 | [0.68, 1.00]
+## newspaper |        -4.87e-03 | [0.00, 1.00]
+## 
+## - One-sided CIs: upper bound fixed at (1).
+```
+
+```r
+effectsize::omega_squared(model)$Omega2
+```
+
+```
+## [1]  0.853558252  0.730839155 -0.004867437
+```
+
 
 ### Cohen ($f^2$)
 
-$$
-f^{2}=\frac{\omega^{2}}{1-\omega^{2}}, \text{sendo }  \omega^{2}=\frac{\overline{x_{1}}-\overline{x_{2}}}{S_{\text {total }}^{2}}
-$$
-$$
-\begin{array}{|l|c|}
-\hline \text { Tamanho do Efeito } & f^{2} \\
-\hline \text { Pequeno } & 0.02 \\
-\hline \text { Médio } & 0.15 \\
-\hline \text { Grande } & 0.35 \\
-\hline
-\end{array}
-$$
+<!-- $$ -->
+<!-- f^{2}=\frac{\omega^{2}}{1-\omega^{2}}, \text{sendo }  \omega^{2}=\frac{\overline{x_{1}}-\overline{x_{2}}}{S_{\text {total }}^{2}} -->
+<!-- $$ -->
+<!-- $$ -->
+<!-- \begin{array}{|l|c|} -->
+<!-- \hline \text { Tamanho do Efeito } & f^{2} \\ -->
+<!-- \hline \text { Pequeno } & 0.02 \\ -->
+<!-- \hline \text { Médio } & 0.15 \\ -->
+<!-- \hline \text { Grande } & 0.35 \\ -->
+<!-- \hline -->
+<!-- \end{array} -->
+<!-- $$ -->
 
-# Análise de Poder
 
-Em estudos estatísticos, muitas vezes surge a pergunta: “Quantos indivídios preciso para meu estudo?” Às vezes, a pergunta é formulada assim: “Tenho x número de pessoas disponíveis para este estudo. Vale a pena fazer o estudo?” Perguntas como essas podem ser respondidas por meio da análise de poder, um importante conjunto de técnicas em planejamento e análise de experimentos. A análise de poder busca responder essas perguntas permitindo a determinação do tamanho da amostra necessário para detectar um efeito de um determinado tamanho com um determinado grau de confiança, por exemplo.
 
-Na análise de poder, há quatro elementos que devem ser levados em consideração: Tamanho do efeito, tamanho da amostra, nível de significância e poder do teste, conforme ilustrado na imagem abaixo:
 
-![https://livebook.manning.com/book/r-in-action/chapter-10/4](imagens/power_analysis.png)
+```r
+effectsize::cohens_f(eruption.lm)
+```
 
-O objetivo de uma análise de poder é encontrar um equilíbrio apropriado entre esses fatores, levando em consideração os objetivos do estudo e os recursos disponíveis para o pesquisador.”
+```
+## For one-way between subjects designs, partial eta squared is equivalent to eta squared.
+## Returning eta squared.
+```
 
-## Análise de poder - Teste Qui-Quadrado não pareado
+```
+## # Effect Size for ANOVA
+## 
+## Parameter | Cohen's f |      95% CI
+## -----------------------------------
+## waiting   |      2.07 | [1.90, Inf]
+## 
+## - One-sided CIs: upper bound fixed at (Inf).
+```
+
+```r
+effectsize::cohens_f(eruption.lm)$Cohens_f
+```
+
+```
+## For one-way between subjects designs, partial eta squared is equivalent to eta squared.
+## Returning eta squared.
+```
+
+```
+## [1] 2.074593
+```
+
+
+```r
+effectsize::cohens_f(model)
+```
+
+```
+## # Effect Size for ANOVA (Type I)
+## 
+## Parameter | Cohen's f (partial) |      95% CI
+## ---------------------------------------------
+## youtube   |                2.44 | [2.20, Inf]
+## facebook  |                1.67 | [1.48, Inf]
+## newspaper |                0.01 | [0.00, Inf]
+## 
+## - One-sided CIs: upper bound fixed at (Inf).
+```
+
+```r
+effectsize::cohens_f(model)$Cohens_f
+```
+
+```
+## [1] 2.43981720 1.66606301 0.01262247
+```
+
+
+# Exemplo análise de poder
+
+## Análise de poder - Teste Qui-Quadrado
 
 
 ```r
@@ -1903,6 +2269,8 @@ Se o verdadeiro efeito for pequeno, é necessário que se tenha amostras grandes
 <!-- ``` -->
 
 
+![Sample Size Calculation with R - https://med.und.edu/daccota/_files/pdfs/berdc_resource_pdfs/sample_size_r_module.pdf](imagens/sample_size_functions.png)
+
 # Referências
 
 - Marcos Douglas Rodrigues de Sousa Principais medidas de magnitude do efeito utilizadas na comparação de dois grupos/ Marcos Douglas Rodrigues de Sousa. – Brasília, 2018-109 p. : il. (algumas color.) ; 30 cm.
@@ -1911,3 +2279,5 @@ Se o verdadeiro efeito for pequeno, é necessário que se tenha amostras grandes
 Association, 1988.
 
 - Questões de Significância (Aula dos professores Paulo S. P Silveira (silveira@usp.br) e José O. Siqueira (siqueira@usp.br))
+
+- https://med.und.edu/daccota/_files/pdfs/berdc_resource_pdfs/sample_size_r_module.pdf
