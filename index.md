@@ -1484,7 +1484,7 @@ effsize::VD.A(grupoa,grupob)
 ## 
 ## Vargha and Delaney A
 ## 
-## A estimate: 0.0511 (large)
+## A estimate: 0.0767 (large)
 ```
 
 #### Medida de efeito: Coeficiente $r$
@@ -1523,7 +1523,7 @@ z1
 ```
 
 ```
-## [1] 0.5543219
+## [1] 0.3837613
 ```
 
 #### Medida de efeito: $\tau$ de Kendall
@@ -1583,6 +1583,9 @@ kendall
 #### Medida de efeito: d de Cohen
 
 Dentre os $ES$, uma medida bastante utilizada é o $d$ de Cohen. A sua utilização pode abranger grupos não-pareados (variâncias populacionais iguais ou desiguais) ou pareados com nível de mensuração intervalar, portanto tal medida é associada ao teste $t$ não-pareado quando as duas amostras são não-pareadas e é associada ao teste $t$ pareado quando as duas amostras são pareadas.
+
+
+![](imagens/tabela_16_contingencia.png)
 
 Considerando que os dois grupos são **independentes** e as **variâncias populacionais são iguais e desconhecidas:** a expressão para o cálculo do $d$ de Cohen é dada da forma [Lakens, 2013]
 
@@ -1665,10 +1668,10 @@ effsize::cohen.d(grupoa,grupob)
 ## 
 ## Cohen's d
 ## 
-## d estimate: -2.124979 (large)
+## d estimate: -1.93506 (large)
 ## 95 percent confidence interval:
 ##     lower     upper 
-## -2.473802 -1.776156
+## -2.272967 -1.597153
 ```
 
 
@@ -1687,7 +1690,7 @@ rstatix::cohens_d(data=grupoa_grupob_format,
 ## # A tibble: 1 x 7
 ##   .y.   group1 group2 effsize    n1    n2 magnitude
 ## * <chr> <chr>  <chr>    <dbl> <int> <int> <ord>    
-## 1 valor grupoa grupob   -2.12   100   100 large
+## 1 valor grupoa grupob   -1.94   100   100 large
 ```
 
 ```r
@@ -1698,7 +1701,7 @@ lsr::cohensD(formula = valor~grupo,
 ```
 
 ```
-## [1] 2.124979
+## [1] 1.93506
 ```
 
 
@@ -1729,10 +1732,10 @@ effsize::cohen.d(grupoa,grupob)
 ## 
 ## Cohen's d
 ## 
-## d estimate: -0.6482121 (medium)
+## d estimate: -0.7700697 (medium)
 ## 95 percent confidence interval:
 ##      lower      upper 
-## -0.9343276 -0.3620966
+## -1.0591066 -0.4810328
 ```
 
 
@@ -1749,7 +1752,7 @@ rstatix::cohens_d(data=grupoa_grupob_format,
 ## # A tibble: 1 x 7
 ##   .y.   group1 group2 effsize    n1    n2 magnitude
 ## * <chr> <chr>  <chr>    <dbl> <int> <int> <ord>    
-## 1 valor grupoa grupob  -0.648   100   100 moderate
+## 1 valor grupoa grupob  -0.770   100   100 moderate
 ```
 
 ```r
@@ -1760,7 +1763,7 @@ lsr::cohensD(formula = valor~grupo,
 ```
 
 ```
-## [1] 0.6482121
+## [1] 0.7700697
 ```
 
 
@@ -1815,7 +1818,7 @@ cohen
 
 ```
 ##          t 
-## -0.3907327
+## -0.4682049
 ```
 
 
@@ -1827,10 +1830,10 @@ effsize::cohen.d(x0,y0,paired = TRUE,  within = FALSE)
 ## 
 ## Cohen's d
 ## 
-## d estimate: -0.3907327 (small)
+## d estimate: -0.4682049 (small)
 ## 95 percent confidence interval:
-##       lower       upper 
-## -0.71730683 -0.06415848
+##      lower      upper 
+## -0.7997882 -0.1366216
 ```
 
 
@@ -1846,12 +1849,12 @@ head(df)
 
 ```
 ##   id treatment      value
-## 1  1       pre  4.7228932
-## 2  2       pre -0.1302421
-## 3  3       pre  4.3612284
-## 4  4       pre  1.8298308
-## 5  5       pre  6.7699760
-## 6  6       pre  2.6010622
+## 1  1       pre  5.1386880
+## 2  2       pre  0.8156539
+## 3  3       pre  2.3333443
+## 4  4       pre  2.1090064
+## 5  5       pre  3.4274228
+## 6  6       pre -1.2830325
 ```
 
 ```r
@@ -1862,7 +1865,7 @@ df %>% rstatix::cohens_d(value ~ treatment, paired = TRUE, ref.group = "pre")
 ## # A tibble: 1 x 7
 ##   .y.   group1 group2 effsize    n1    n2 magnitude
 ## * <chr> <chr>  <chr>    <dbl> <int> <int> <ord>    
-## 1 value pre    post    -0.391    40    40 small
+## 1 value pre    post    -0.468    40    40 small
 ```
 
 
@@ -1875,7 +1878,7 @@ lsr::cohensD(x = x0,
 ```
 
 ```
-## [1] 0.3907327
+## [1] 0.4682049
 ```
 
 
@@ -1884,8 +1887,6 @@ lsr::cohensD(x = x0,
 
 
 
-
-![](imagens/tabela_16_contingencia.png)
 
 
 #### Medida de efeito: g de Hedges
@@ -1934,10 +1935,10 @@ effsize::cohen.d(d,f,hedges.correction=TRUE)
 ## 
 ## Hedges's g
 ## 
-## g estimate: -1.393861 (large)
+## g estimate: -2.196406 (large)
 ## 95 percent confidence interval:
-##      lower      upper 
-## -2.2051900 -0.5825325
+##     lower     upper 
+## -3.117824 -1.274989
 ```
 
 #### Medida de efeito: Delta $\Delta$ de Glass
@@ -1975,7 +1976,7 @@ delta
 ```
 
 ```
-## [1] 1.119508
+## [1] 1.151443
 ```
 
 
@@ -1993,7 +1994,7 @@ effectsize::glass_delta(x=tratamento,y=controle, data = data_trat_control)
 ```
 ## Glass' delta |       95% CI
 ## ---------------------------
-## 1.12         | [0.66, 1.57]
+## 1.15         | [0.71, 1.59]
 ```
 
 ```r
@@ -2001,7 +2002,7 @@ effectsize::glass_delta(x=tratamento,y=controle, data = data_trat_control)$Glass
 ```
 
 ```
-## [1] 1.119508
+## [1] 1.151443
 ```
 
 

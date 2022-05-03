@@ -1463,6 +1463,9 @@ kendall
 
 Dentre os $ES$, uma medida bastante utilizada é o $d$ de Cohen. A sua utilização pode abranger grupos não-pareados (variâncias populacionais iguais ou desiguais) ou pareados com nível de mensuração intervalar, portanto tal medida é associada ao teste $t$ não-pareado quando as duas amostras são não-pareadas e é associada ao teste $t$ pareado quando as duas amostras são pareadas.
 
+
+![](imagens/tabela_16_contingencia.png)
+
 Considerando que os dois grupos são **independentes** e as **variâncias populacionais são iguais e desconhecidas:** a expressão para o cálculo do $d$ de Cohen é dada da forma [Lakens, 2013]
 
 $$
@@ -1740,8 +1743,6 @@ mean(x0)-mean(y0)
 
 S_d = sqrt((1/n1 + dd^2/(2 * n1)) * (2 - 2 * r))
 ```
-
-![](imagens/tabela_16_contingencia.png)
 
 
 #### Medida de efeito: g de Hedges
