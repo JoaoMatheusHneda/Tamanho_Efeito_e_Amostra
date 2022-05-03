@@ -1633,8 +1633,6 @@ $n$ número de observações nas duas amostras pareadas, sendo amostras pareadas
 
 Cohen definiu os níveis de magnitude do efeito $(E S)$. Tais níveis estão especificados na Tabela 17 [Cohen, 1988].
 
-![](imagens/tabela_16_contingencia.png)
-
 
 ```{r}
 # Para esse exemplo,
@@ -1743,7 +1741,7 @@ mean(x0)-mean(y0)
 S_d = sqrt((1/n1 + dd^2/(2 * n1)) * (2 - 2 * r))
 ```
 
-
+![](imagens/tabela_16_contingencia.png)
 
 
 #### Medida de efeito: g de Hedges

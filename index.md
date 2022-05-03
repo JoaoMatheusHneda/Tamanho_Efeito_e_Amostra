@@ -1484,7 +1484,7 @@ effsize::VD.A(grupoa,grupob)
 ## 
 ## Vargha and Delaney A
 ## 
-## A estimate: 0.0918 (large)
+## A estimate: 0.0511 (large)
 ```
 
 #### Medida de efeito: Coeficiente $r$
@@ -1665,10 +1665,10 @@ effsize::cohen.d(grupoa,grupob)
 ## 
 ## Cohen's d
 ## 
-## d estimate: -2.002687 (large)
+## d estimate: -2.124979 (large)
 ## 95 percent confidence interval:
 ##     lower     upper 
-## -2.344403 -1.660970
+## -2.473802 -1.776156
 ```
 
 
@@ -1687,7 +1687,7 @@ rstatix::cohens_d(data=grupoa_grupob_format,
 ## # A tibble: 1 x 7
 ##   .y.   group1 group2 effsize    n1    n2 magnitude
 ## * <chr> <chr>  <chr>    <dbl> <int> <int> <ord>    
-## 1 valor grupoa grupob   -2.00   100   100 large
+## 1 valor grupoa grupob   -2.12   100   100 large
 ```
 
 ```r
@@ -1698,7 +1698,7 @@ lsr::cohensD(formula = valor~grupo,
 ```
 
 ```
-## [1] 2.002687
+## [1] 2.124979
 ```
 
 
@@ -1729,10 +1729,10 @@ effsize::cohen.d(grupoa,grupob)
 ## 
 ## Cohen's d
 ## 
-## d estimate: -0.5912473 (medium)
+## d estimate: -0.6482121 (medium)
 ## 95 percent confidence interval:
 ##      lower      upper 
-## -0.8761607 -0.3063339
+## -0.9343276 -0.3620966
 ```
 
 
@@ -1749,7 +1749,7 @@ rstatix::cohens_d(data=grupoa_grupob_format,
 ## # A tibble: 1 x 7
 ##   .y.   group1 group2 effsize    n1    n2 magnitude
 ## * <chr> <chr>  <chr>    <dbl> <int> <int> <ord>    
-## 1 valor grupoa grupob  -0.591   100   100 moderate
+## 1 valor grupoa grupob  -0.648   100   100 moderate
 ```
 
 ```r
@@ -1760,7 +1760,7 @@ lsr::cohensD(formula = valor~grupo,
 ```
 
 ```
-## [1] 0.5912473
+## [1] 0.6482121
 ```
 
 
@@ -1787,8 +1787,6 @@ $n$ número de observações nas duas amostras pareadas, sendo amostras pareadas
 <!-- $$ -->
 
 Cohen definiu os níveis de magnitude do efeito $(E S)$. Tais níveis estão especificados na Tabela 17 [Cohen, 1988].
-
-![](imagens/tabela_16_contingencia.png)
 
 
 
@@ -1817,7 +1815,7 @@ cohen
 
 ```
 ##          t 
-## -0.5055506
+## -0.3907327
 ```
 
 
@@ -1829,10 +1827,10 @@ effsize::cohen.d(x0,y0,paired = TRUE,  within = FALSE)
 ## 
 ## Cohen's d
 ## 
-## d estimate: -0.5055506 (medium)
+## d estimate: -0.3907327 (small)
 ## 95 percent confidence interval:
-##      lower      upper 
-## -0.8398397 -0.1712616
+##       lower       upper 
+## -0.71730683 -0.06415848
 ```
 
 
@@ -1848,12 +1846,12 @@ head(df)
 
 ```
 ##   id treatment      value
-## 1  1       pre -1.3660234
-## 2  2       pre  2.6154949
-## 3  3       pre -1.8839317
-## 4  4       pre -1.1740183
-## 5  5       pre  0.4519201
-## 6  6       pre -0.3827063
+## 1  1       pre  4.7228932
+## 2  2       pre -0.1302421
+## 3  3       pre  4.3612284
+## 4  4       pre  1.8298308
+## 5  5       pre  6.7699760
+## 6  6       pre  2.6010622
 ```
 
 ```r
@@ -1864,7 +1862,7 @@ df %>% rstatix::cohens_d(value ~ treatment, paired = TRUE, ref.group = "pre")
 ## # A tibble: 1 x 7
 ##   .y.   group1 group2 effsize    n1    n2 magnitude
 ## * <chr> <chr>  <chr>    <dbl> <int> <int> <ord>    
-## 1 value pre    post    -0.506    40    40 moderate
+## 1 value pre    post    -0.391    40    40 small
 ```
 
 
@@ -1877,7 +1875,7 @@ lsr::cohensD(x = x0,
 ```
 
 ```
-## [1] 0.5055506
+## [1] 0.3907327
 ```
 
 
@@ -1887,7 +1885,7 @@ lsr::cohensD(x = x0,
 
 
 
-
+![](imagens/tabela_16_contingencia.png)
 
 
 #### Medida de efeito: g de Hedges
@@ -1936,10 +1934,10 @@ effsize::cohen.d(d,f,hedges.correction=TRUE)
 ## 
 ## Hedges's g
 ## 
-## g estimate: -1.991541 (large)
+## g estimate: -1.393861 (large)
 ## 95 percent confidence interval:
-##     lower     upper 
-## -2.881602 -1.101479
+##      lower      upper 
+## -2.2051900 -0.5825325
 ```
 
 #### Medida de efeito: Delta $\Delta$ de Glass
@@ -1977,7 +1975,7 @@ delta
 ```
 
 ```
-## [1] 0.9197204
+## [1] 1.119508
 ```
 
 
@@ -1995,7 +1993,7 @@ effectsize::glass_delta(x=tratamento,y=controle, data = data_trat_control)
 ```
 ## Glass' delta |       95% CI
 ## ---------------------------
-## 0.92         | [0.49, 1.34]
+## 1.12         | [0.66, 1.57]
 ```
 
 ```r
@@ -2003,7 +2001,7 @@ effectsize::glass_delta(x=tratamento,y=controle, data = data_trat_control)$Glass
 ```
 
 ```
-## [1] 0.9197204
+## [1] 1.119508
 ```
 
 
